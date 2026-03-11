@@ -39,6 +39,7 @@ export class GrupamentoFormComponent implements OnInit {
 
   salvar(): void {
     if (!this.nome.trim() || !this.sigla.trim()) { this.toastr.warning('Preencha todos os campos'); return; }
+    if (this.sigla.trim().length !== 4) { this.toastr.warning('A sigla deve ter exatamente 4 caracteres'); return; }
     this.loading = true;
     const data = { nome: this.nome.trim(), sigla: this.sigla.trim().toUpperCase() };
     const req = this.isEdit && this.id

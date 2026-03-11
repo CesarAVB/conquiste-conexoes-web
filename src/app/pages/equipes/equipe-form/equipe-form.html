@@ -12,9 +12,12 @@
       <div class="row g-3">
         <div class="col-12 col-md-6">
           <label class="form-label">Nome da Equipe <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" [(ngModel)]="form.nome" name="nome"
-                 placeholder="C+C Nome da Equipe" maxlength="100" required>
-          <small class="text-muted">Deve começar com &quot;C+C&quot;</small>
+          <div class="input-group">
+            <span class="input-group-text fw-bold text-primary">C+C</span>
+            <input type="text" class="form-control" [(ngModel)]="nomeSufixo" name="nomeSufixo"
+                   placeholder="Nome da equipe (ex: Fênix)" maxlength="16" required>
+          </div>
+          <small class="text-muted">O prefixo "C+C" é incluído automaticamente</small>
         </div>
         <div class="col-12 col-md-3">
           <label class="form-label">Data Início Formação</label>

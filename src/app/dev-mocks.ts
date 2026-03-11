@@ -42,16 +42,18 @@ const nowIso = () => new Date().toISOString().slice(0, 10);
 // -----------------------------------------------------------
 
 const CLUSTERS = [
-  { id: 1, nome: 'Cluster Alpha', ativo: true },
-  { id: 2, nome: 'Cluster Beta', ativo: true },
-  { id: 3, nome: 'Cluster Delta', ativo: false },
+  { id: 1, nome: 'Saúde', ativo: true },
+  { id: 2, nome: 'Construção', ativo: true },
+  { id: 3, nome: 'Negócios', ativo: true },
 ];
 
 const ATUACOES = [
-  { id: 1, nome: 'Contabilidade', clusterId: 1, clusterNome: 'Cluster Alpha', ativo: true },
-  { id: 2, nome: 'Advocacia', clusterId: 1, clusterNome: 'Cluster Alpha', ativo: true },
-  { id: 3, nome: 'Engenharia Civil', clusterId: 2, clusterNome: 'Cluster Beta', ativo: true },
-  { id: 4, nome: 'TI / Desenvolvimento', clusterId: 2, clusterNome: 'Cluster Beta', ativo: true },
+  { id: 1, nome: 'Nutrição Clínica', clusterId: 1, clusterNome: 'Saúde', ativo: true },
+  { id: 2, nome: 'Medicina', clusterId: 1, clusterNome: 'Saúde', ativo: true },
+  { id: 3, nome: 'Engenharia Civil', clusterId: 2, clusterNome: 'Construção', ativo: true },
+  { id: 4, nome: 'Arquitetura', clusterId: 2, clusterNome: 'Construção', ativo: true },
+  { id: 5, nome: 'Contabilidade', clusterId: 3, clusterNome: 'Negócios', ativo: true },
+  { id: 6, nome: 'Advocacia', clusterId: 3, clusterNome: 'Negócios', ativo: true },
 ];
 
 const HORARIOS = [
@@ -61,9 +63,9 @@ const HORARIOS = [
 ];
 
 const GRUPAMENTOS = [
-  { id: 1, nome: 'Liderança', sigla: 'LID', ativo: true },
-  { id: 2, nome: 'Educação', sigla: 'EDU', ativo: true },
-  { id: 3, nome: 'Desenvolvimento', sigla: 'DEV', ativo: true },
+  { id: 1, nome: 'Civil e Liderança', sigla: 'CIVL', ativo: true },
+  { id: 2, nome: 'Saúde e Integração', sigla: 'SAIN', ativo: true },
+  { id: 3, nome: 'Imobiliário', sigla: 'IMOB', ativo: true },
 ];
 
 const CARGOS = [
@@ -75,20 +77,20 @@ const CARGOS = [
 
 const EQUIPES = [
   {
-    id: 1, nome: 'Equipe Águia', dataInicioFormacao: '2024-01-15',
-    dataPrevisaoLancamento: '2024-04-15', dataEfetivaLancamento: '2024-04-20',
+    id: 1, nome: 'C+C Águia', dataInicioFormacao: '2024-01-15',
+    dataPrevisaoLancamento: '2024-03-18', dataEfetivaLancamento: '2024-03-20',
     diaReuniao: 'TERCA', horarioReuniaoId: 1, horarioDescricao: 'Terça 07h30',
     modeloReuniao: 'PRESENCIAL', linkZoom: '', status: 'ATIVA', contadorReunioes: 48,
   },
   {
-    id: 2, nome: 'Equipe Leão', dataInicioFormacao: '2024-06-01',
-    dataPrevisaoLancamento: '2024-09-01', dataEfetivaLancamento: '2024-09-10',
+    id: 2, nome: 'C+C Leão', dataInicioFormacao: '2024-06-01',
+    dataPrevisaoLancamento: '2024-08-03', dataEfetivaLancamento: '2024-08-10',
     diaReuniao: 'QUARTA', horarioReuniaoId: 2, horarioDescricao: 'Quarta 12h00',
     modeloReuniao: 'HIBRIDO', linkZoom: 'https://zoom.us/j/123456', status: 'ATIVA', contadorReunioes: 28,
   },
   {
-    id: 3, nome: 'Equipe Falcão', dataInicioFormacao: '2025-02-01',
-    dataPrevisaoLancamento: '2025-06-01', dataEfetivaLancamento: '',
+    id: 3, nome: 'C+C Falcão', dataInicioFormacao: '2025-02-01',
+    dataPrevisaoLancamento: '2025-04-05', dataEfetivaLancamento: '',
     diaReuniao: 'QUINTA', horarioReuniaoId: 3, horarioDescricao: 'Quinta 18h00',
     modeloReuniao: 'ONLINE', linkZoom: 'https://zoom.us/j/789012', status: 'EM_FORMACAO', contadorReunioes: 12,
   },
@@ -99,51 +101,51 @@ const ASSOCIADOS = [
     id: 1, nomeCompleto: 'Ana Paula Ferreira', cpf: '111.222.333-44',
     email: 'ana.paula@email.com', whatsapp: '(11) 91234-5678',
     dataNascimento: '1988-03-15', mostrarAniversarioRede: true,
-    dataIngresso: '2024-02-01', vencimentoAtual: '2025-02-01',
-    status: 'ATIVO', equipeOrigemTipo: 'INTERNO',
+    dataIngresso: '2024-02-01', vencimentoAtual: '2025-03-01',
+    status: 'ATIVO', equipeOrigemTipo: 'ORIGINAL',
     padrinhoId: 2, padrinhoNome: 'Carlos Mendes',
-    equipeAtualId: 1, equipeOrigemId: 1, clusterId: 1,
-    clusterNome: 'Cluster Alpha', atuacaoEspecificaId: 1, atuacaoEspecificaNome: 'Contabilidade',
+    equipeAtualId: 1, equipeOrigemId: 1, clusterId: 3,
+    clusterNome: 'Negócios', atuacaoEspecificaId: 5, atuacaoEspecificaNome: 'Contabilidade',
   },
   {
     id: 2, nomeCompleto: 'Carlos Mendes', cpf: '222.333.444-55',
     email: 'carlos.mendes@email.com', whatsapp: '(11) 92345-6789',
     dataNascimento: '1982-07-22', mostrarAniversarioRede: false,
-    dataIngresso: '2023-05-10', vencimentoAtual: '2025-05-10',
-    status: 'ATIVO', equipeOrigemTipo: 'INTERNO',
+    dataIngresso: '2023-05-10', vencimentoAtual: '2025-06-01',
+    status: 'ATIVO', equipeOrigemTipo: 'ORIGINAL',
     padrinhoId: 0, padrinhoNome: '',
-    equipeAtualId: 1, equipeOrigemId: 1, clusterId: 1,
-    clusterNome: 'Cluster Alpha', atuacaoEspecificaId: 2, atuacaoEspecificaNome: 'Advocacia',
+    equipeAtualId: 1, equipeOrigemId: 1, clusterId: 3,
+    clusterNome: 'Negócios', atuacaoEspecificaId: 6, atuacaoEspecificaNome: 'Advocacia',
   },
   {
     id: 3, nomeCompleto: 'Beatriz Costa', cpf: '333.444.555-66',
     email: 'beatriz.costa@email.com', whatsapp: '(21) 93456-7890',
     dataNascimento: '1992-11-08', mostrarAniversarioRede: true,
-    dataIngresso: '2024-08-20', vencimentoAtual: '2025-08-20',
-    status: 'ATIVO', equipeOrigemTipo: 'INTERNO',
+    dataIngresso: '2024-08-20', vencimentoAtual: '2025-09-01',
+    status: 'ATIVO', equipeOrigemTipo: 'ORIGINAL',
     padrinhoId: 1, padrinhoNome: 'Ana Paula Ferreira',
     equipeAtualId: 2, equipeOrigemId: 2, clusterId: 2,
-    clusterNome: 'Cluster Beta', atuacaoEspecificaId: 3, atuacaoEspecificaNome: 'Engenharia Civil',
+    clusterNome: 'Construção', atuacaoEspecificaId: 3, atuacaoEspecificaNome: 'Engenharia Civil',
   },
   {
     id: 4, nomeCompleto: 'Roberto Alves', cpf: '444.555.666-77',
     email: 'roberto.alves@email.com', whatsapp: '(31) 94567-8901',
     dataNascimento: '1975-05-30', mostrarAniversarioRede: false,
-    dataIngresso: '2023-11-01', vencimentoAtual: '2025-11-01',
-    status: 'PAUSADO', equipeOrigemTipo: 'INTERNO',
+    dataIngresso: '2023-11-01', vencimentoAtual: '2024-12-01',
+    status: 'INATIVO_PAUSA', equipeOrigemTipo: 'COLABORATIVA',
     padrinhoId: 2, padrinhoNome: 'Carlos Mendes',
     equipeAtualId: 2, equipeOrigemId: 2, clusterId: 2,
-    clusterNome: 'Cluster Beta', atuacaoEspecificaId: 4, atuacaoEspecificaNome: 'TI / Desenvolvimento',
+    clusterNome: 'Construção', atuacaoEspecificaId: 4, atuacaoEspecificaNome: 'Arquitetura',
   },
   {
     id: 5, nomeCompleto: 'Fernanda Lima', cpf: '555.666.777-88',
     email: 'fernanda.lima@email.com', whatsapp: '(41) 95678-9012',
     dataNascimento: '1995-09-12', mostrarAniversarioRede: true,
-    dataIngresso: '2025-01-15', vencimentoAtual: '2026-01-15',
-    status: 'EM_FORMACAO', equipeOrigemTipo: 'EXTERNO',
+    dataIngresso: '2025-01-15', vencimentoAtual: '2026-02-01',
+    status: 'PRE_ATIVO', equipeOrigemTipo: 'ORIGINAL',
     padrinhoId: 3, padrinhoNome: 'Beatriz Costa',
     equipeAtualId: 3, equipeOrigemId: 3, clusterId: 1,
-    clusterNome: 'Cluster Alpha', atuacaoEspecificaId: 1, atuacaoEspecificaNome: 'Contabilidade',
+    clusterNome: 'Saúde', atuacaoEspecificaId: 1, atuacaoEspecificaNome: 'Nutrição Clínica',
   },
 ];
 
@@ -259,17 +261,17 @@ const VISITANTES = [
 const PEEN_MODULOS = [
   {
     id: 1, titulo: 'Módulo 1 — Fundamentos do Networking', descricao: 'Aprenda as bases do networking eficaz.',
-    urlPlataforma: 'https://plataforma.example.com/peen/1', duracaoHoras: 4, pontos: 100,
+    urlPlataforma: 'https://plataforma.example.com/peen/1', duracaoHoras: 4, pontos: 5,
     concluido: true, dataConclusao: '2025-11-15',
   },
   {
     id: 2, titulo: 'Módulo 2 — Reuniões de Negócios', descricao: 'Técnicas para reuniões 1 a 1 produtivas.',
-    urlPlataforma: 'https://plataforma.example.com/peen/2', duracaoHoras: 6, pontos: 150,
+    urlPlataforma: 'https://plataforma.example.com/peen/2', duracaoHoras: 6, pontos: 5,
     concluido: false, dataConclusao: '',
   },
   {
     id: 3, titulo: 'Módulo 3 — Geração de Conexões', descricao: 'Como gerar e receber conexões estratégicas.',
-    urlPlataforma: 'https://plataforma.example.com/peen/3', duracaoHoras: 5, pontos: 125,
+    urlPlataforma: 'https://plataforma.example.com/peen/3', duracaoHoras: 5, pontos: 5,
     concluido: false, dataConclusao: '',
   },
 ];
@@ -306,10 +308,14 @@ const EVOLUCAO = [
   { periodo: 'Mar/26', reunioes: 7, conexoes: 14, ng: 16, parcerias: 2, nr: 5, visitantes: 1, pontos: 360 },
 ];
 
+// Pontuacao por performance de grupo (§2.2)
 const PARAMETRIZACOES = [
-  { id: 1, faixaMinima: 0, faixaMaxima: 200, pontuacao: 1 },
-  { id: 2, faixaMinima: 201, faixaMaxima: 400, pontuacao: 2 },
-  { id: 3, faixaMinima: 401, faixaMaxima: 9999, pontuacao: 3 },
+  { id: 1, faixaMinima: 15, faixaMaxima: 24, pontuacao: 20 },
+  { id: 2, faixaMinima: 25, faixaMaxima: 34, pontuacao: 22 },
+  { id: 3, faixaMinima: 35, faixaMaxima: 44, pontuacao: 24 },
+  { id: 4, faixaMinima: 45, faixaMaxima: 54, pontuacao: 26 },
+  { id: 5, faixaMinima: 55, faixaMaxima: 64, pontuacao: 28 },
+  { id: 6, faixaMinima: 65, faixaMaxima: 9999, pontuacao: 30 },
 ];
 
 const PERFIL: import('./models/perfil-associado.model').PerfilAssociado = {
@@ -324,9 +330,9 @@ const PERFIL: import('./models/perfil-associado.model').PerfilAssociado = {
   principalProblemaQueResolvo: 'Regularização fiscal e redução de carga tributária.',
   conexoesEstrategicas: 'Advogados, consultores financeiros, gestores de RH.',
   interessesPessoais: 'Leitura, corrida, viagens.',
-  clusterNome: 'Cluster Alpha', atuacaoEspecificaNome: 'Contabilidade',
-  equipeNome: 'Equipe Águia', status: 'ATIVO',
-  dataIngresso: '2024-02-01', vencimento: '2025-02-01',
+  clusterNome: 'Negócios', atuacaoEspecificaNome: 'Contabilidade',
+  equipeNome: 'C+C Águia', status: 'ATIVO',
+  dataIngresso: '2024-02-01', vencimento: '2025-03-01',
 };
 
 const SEGURO: import('./models/cadastro-seguro.model').CadastroSeguro = {
@@ -353,7 +359,11 @@ export const DEV_MOCK_PROVIDERS = [
       criar: (data: unknown) => ok({ ...ASSOCIADOS[0], ...data as object, id: 99 }, 'Associado criado'),
       editar: (id: number, data: unknown) => ok({ ...ASSOCIADOS[0], ...data as object, id }, 'Associado atualizado'),
       alterarStatus: (id: number) => ok({ ...ASSOCIADOS[0], id }, 'Status alterado'),
-      buscarParaSelect: () => ok(ASSOCIADOS.map(a => ({ id: a.id, nomeCompleto: a.nomeCompleto, cpf: a.cpf }))),
+      buscarParaSelect: (query: string) => ok(
+        ASSOCIADOS
+          .filter(a => a.nomeCompleto.toLowerCase().includes(query.toLowerCase()) || a.cpf.includes(query))
+          .map(a => ({ id: a.id, nomeCompleto: a.nomeCompleto, cpf: a.cpf }))
+      ),
     },
   },
 
@@ -361,8 +371,8 @@ export const DEV_MOCK_PROVIDERS = [
     provide: AnuidadeService,
     useValue: {
       listarPorAssociado: () => ok([
-        { id: 1, tipo: 'PRIMEIRA', statusPagamento: 'PAGO', dataPagamento: '2024-02-05', vencimentoGerado: '2025-02-01' },
-        { id: 2, tipo: 'RENOVACAO', statusPagamento: 'AGUARDANDO', dataPagamento: '', vencimentoGerado: '2026-02-01' },
+        { id: 1, tipo: 'PRIMEIRA', statusPagamento: 'PAGO', dataPagamento: '2024-03-05', vencimentoGerado: '2025-03-01' },
+        { id: 2, tipo: 'RENOVACAO', statusPagamento: 'AGUARDANDO', dataPagamento: '', vencimentoGerado: '2026-03-01' },
       ]),
       renovar: (_id: number, data: unknown) => ok({ id: 3, tipo: 'RENOVACAO', ...data as object }, 'Anuidade renovada'),
     },
@@ -383,10 +393,10 @@ export const DEV_MOCK_PROVIDERS = [
     provide: AssociadoGrupamentoService,
     useValue: {
       listarPorAssociado: () => ok([
-        { id: 1, grupamentoId: 1, grupamentoNome: 'Liderança', grupamentoSigla: 'LID' },
+        { id: 1, grupamentoId: 1, grupamentoNome: 'Civil e Liderança', grupamentoSigla: 'CIVL' },
       ]),
       vincular: (_id: number, grupamentoId: number) =>
-        ok({ id: 99, grupamentoId, grupamentoNome: 'Liderança', grupamentoSigla: 'LID' }, 'Vinculado'),
+        ok({ id: 99, grupamentoId, grupamentoNome: 'Civil e Liderança', grupamentoSigla: 'CIVL' }, 'Vinculado'),
       desvincular: () => ok(null, 'Desvinculado'),
     },
   },
@@ -394,7 +404,7 @@ export const DEV_MOCK_PROVIDERS = [
   {
     provide: AtuacaoEspecificaService,
     useValue: {
-      listarPorCluster: (clusterId: number) => ok(ATUACOES.filter(a => a.clusterId === clusterId)),
+      listarPorCluster: (clusterId: number) => ok(ATUACOES.filter(a => a.clusterId === clusterId && a.ativo)),
       buscarPorId: (id: number) => ok(ATUACOES.find(a => a.id === id) ?? ATUACOES[0]),
       criar: (data: unknown) => ok({ ...ATUACOES[0], ...data as object, id: 99 }, 'Atuação criada'),
       editar: (id: number, data: unknown) => ok({ ...ATUACOES[0], ...data as object, id }, 'Atuação atualizada'),

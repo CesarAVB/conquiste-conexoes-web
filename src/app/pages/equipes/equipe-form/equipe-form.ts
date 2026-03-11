@@ -49,6 +49,7 @@ export class EquipeFormComponent implements OnInit {
   readonly modelosReuniao = ['PRESENCIAL', 'ONLINE', 'HIBRIDO'];
   readonly estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
 
+  nomeSufixo = '';
   previsaoLancamento = '';
 
   constructor(
@@ -79,7 +80,7 @@ export class EquipeFormComponent implements OnInit {
   onDataInicioChange(): void {
     if (!this.form.dataInicioFormacao) { this.previsaoLancamento = ''; return; }
     const d = new Date(this.form.dataInicioFormacao);
-    d.setDate(d.getDate() + 84); // 12 semanas
+    d.setDate(d.getDate() + 63); // 9 semanas (§2.1)
     this.previsaoLancamento = d.toLocaleDateString('pt-BR');
   }
 
@@ -88,7 +89,7 @@ export class EquipeFormComponent implements OnInit {
     this.equipeService.buscarPorId(this.id).subscribe({
       next: (res) => {
         const e = res.data;
-        this.form.nome = e.nome;
+        this.nomeSufixo = e.nome.replace(/^C\+C\s+/i, '');
         this.form.dataInicioFormacao = e.dataInicioFormacao;
         this.form.diaReuniao = e.diaReuniao;
         this.form.horarioReuniaoId = String(e.horarioReuniaoId ?? '');
@@ -110,18 +111,19 @@ export class EquipeFormComponent implements OnInit {
   }
 
   salvar(): void {
-    if (!this.form.nome.trim()) {
+    if (!this.nomeSufixo.trim()) {
       this.toastr.warning('Preencha o nome da equipe');
       return;
     }
-    if (!this.form.nome.startsWith('C+C')) {
-      this.toastr.warning('O nome da equipe deve começar com "C+C"');
+    if (this.nomeSufixo.trim().length > 16) {
+      this.toastr.warning('O nome deve ter no máximo 20 caracteres incluindo o prefixo "C+C"');
       return;
     }
 
     this.loading = true;
+    const nomeCompleto = `C+C ${this.nomeSufixo.trim()}`;
     const payload: Record<string, unknown> = {
-      nome: this.form.nome.trim(),
+      nome: nomeCompleto,
       dataInicioFormacao: this.form.dataInicioFormacao || null,
       diaReuniao: this.form.diaReuniao || null,
       horarioReuniaoId: this.form.horarioReuniaoId ? +this.form.horarioReuniaoId : null,
