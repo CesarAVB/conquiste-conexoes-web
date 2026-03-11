@@ -1,92 +1,263 @@
-<div class="dash-header">
+<!-- Header -->
+<div class="home-header">
   <div>
-    <h4 class="dash-title">Dashboard</h4>
-    <p class="dash-subtitle">Bem-vindo ao sistema Conquiste + Conexões</p>
+    <h4 class="home-title">Meu Painel de Performance</h4>
+    <p class="home-subtitle">{{ dataHoje }}</p>
+  </div>
+  <div class="home-shortcuts">
+    <a routerLink="/operacional/reunioes" class="shortcut-btn" title="Reuniões"><i class="fas fa-calendar-check"></i><span>Reunião</span></a>
+    <a routerLink="/operacional/conexoes/nova" class="shortcut-btn" title="Nova Conexão"><i class="fas fa-handshake"></i><span>Conexão</span></a>
+    <a routerLink="/operacional/parcerias/nova" class="shortcut-btn" title="Nova Parceria"><i class="fas fa-briefcase"></i><span>Parceria</span></a>
+    <a routerLink="/operacional/visitantes/externo" class="shortcut-btn" title="Visitante"><i class="fas fa-user-plus"></i><span>Visitante</span></a>
+    <a routerLink="/educacional/peen" class="shortcut-btn" title="PEEN"><i class="fas fa-graduation-cap"></i><span>PEEN</span></a>
+    <a routerLink="/educacional/teen" class="shortcut-btn" title="TEEN"><i class="fas fa-star"></i><span>TEEN</span></a>
   </div>
 </div>
 
-<!-- Stat cards -->
-<div class="dash-stats">
-  <div class="dash-stat">
-    <div class="dash-stat__icon dash-stat__icon--blue">
-      <i class="fas fa-users"></i>
-    </div>
-    <div class="dash-stat__body">
-      <span class="dash-stat__label">Associados</span>
-      <span class="dash-stat__hint">Gerencie os membros</span>
-    </div>
-    <a routerLink="/associados" class="dash-stat__link"><i class="fas fa-arrow-right"></i></a>
+<!-- ==================== Painel 1: Indicadores da Semana ==================== -->
+<div class="panel-card mb-3">
+  <div class="panel-card__header">
+    <i class="fas fa-tachometer-alt me-2 text-primary"></i>
+    <span>Indicadores da Semana</span>
+    <span class="panel-card__badge">Ciclo atual</span>
   </div>
-
-  <div class="dash-stat">
-    <div class="dash-stat__icon dash-stat__icon--green">
-      <i class="fas fa-people-group"></i>
-    </div>
-    <div class="dash-stat__body">
-      <span class="dash-stat__label">Equipes</span>
-      <span class="dash-stat__hint">Gerencie as equipes</span>
-    </div>
-    <a routerLink="/equipes" class="dash-stat__link"><i class="fas fa-arrow-right"></i></a>
-  </div>
-
-  <div class="dash-stat">
-    <div class="dash-stat__icon dash-stat__icon--purple">
-      <i class="fas fa-layer-group"></i>
-    </div>
-    <div class="dash-stat__body">
-      <span class="dash-stat__label">Clusters</span>
-      <span class="dash-stat__hint">Gerencie os clusters</span>
-    </div>
-    <a routerLink="/admin/clusters" class="dash-stat__link"><i class="fas fa-arrow-right"></i></a>
-  </div>
-
-  <div class="dash-stat">
-    <div class="dash-stat__icon dash-stat__icon--amber">
-      <i class="fas fa-cogs"></i>
-    </div>
-    <div class="dash-stat__body">
-      <span class="dash-stat__label">Administração</span>
-      <span class="dash-stat__hint">Configurações gerais</span>
-    </div>
-    <a routerLink="/admin/clusters" class="dash-stat__link"><i class="fas fa-arrow-right"></i></a>
+  <div class="panel-card__body">
+    @if (loadingSemanal) {
+      <app-loading-spinner></app-loading-spinner>
+    } @else if (indicadores.length === 0) {
+      <div class="alert alert-info mb-0"><i class="fas fa-info-circle me-2"></i>Nenhum dado disponível.</div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table table-hover ind-table mb-0">
+          <thead>
+            <tr>
+              <th>Indicador</th>
+              <th class="text-center">Ação</th>
+              <th class="text-end pe-4">Acumulado da Semana</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (ind of indicadores; track ind.nome) {
+              <tr>
+                <td class="ind-table__nome">
+                  <span class="ind-dot" [class.ind-dot--money]="ind.isMoney"></span>
+                  {{ ind.nome }}
+                </td>
+                <td class="text-center">
+                  @if (ind.rotaAcao) {
+                    <a class="btn btn-sm btn-outline-primary" [routerLink]="ind.rotaAcao">
+                      <i class="fas fa-plus me-1"></i>{{ ind.labelAcao || 'Registrar' }}
+                    </a>
+                  } @else {
+                    <span class="text-muted small">—</span>
+                  }
+                </td>
+                <td class="text-end pe-4">
+                  <span class="ind-acumulado">
+                    @if (ind.isMoney) {
+                      {{ ind.acumulado | currency:'BRL':'symbol':'1.0-0' }}
+                    } @else {
+                      {{ ind.acumulado }}
+                    }
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
   </div>
 </div>
 
-<!-- Shortcuts -->
-<div class="dash-section">
-  <h6 class="dash-section__title">Acesso rápido</h6>
-  <div class="dash-shortcuts">
-    <a routerLink="/operacional/reunioes" class="dash-shortcut">
-      <i class="fas fa-calendar-days"></i>
-      <span>Reuniões</span>
-    </a>
-    <a routerLink="/operacional/conexoes/nova" class="dash-shortcut">
-      <i class="fas fa-handshake"></i>
-      <span>Nova Conexão</span>
-    </a>
-    <a routerLink="/operacional/visitantes/externo" class="dash-shortcut">
-      <i class="fas fa-user-plus"></i>
-      <span>Visitante</span>
-    </a>
-    <a routerLink="/operacional/parcerias/nova" class="dash-shortcut">
-      <i class="fas fa-briefcase"></i>
-      <span>Nova Parceria</span>
-    </a>
-    <a routerLink="/paineis/semanal" class="dash-shortcut">
-      <i class="fas fa-chart-bar"></i>
-      <span>Painel Semanal</span>
-    </a>
-    <a routerLink="/relatorios/presenca" class="dash-shortcut">
-      <i class="fas fa-file-lines"></i>
-      <span>Relatório Presença</span>
-    </a>
-    <a routerLink="/educacional/peen" class="dash-shortcut">
-      <i class="fas fa-graduation-cap"></i>
-      <span>PEEN</span>
-    </a>
-    <a routerLink="/educacional/teen" class="dash-shortcut">
-      <i class="fas fa-star"></i>
-      <span>TEEN</span>
-    </a>
+<!-- ==================== Painéis 2 e 3: Evolução Individual + Equipe ==================== -->
+<div class="panels-row mb-3">
+
+  <!-- Painel 2: Evolução Individual -->
+  <div class="panel-card">
+    <div class="panel-card__header">
+      <i class="fas fa-chart-line me-2 text-success"></i>
+      <span>Minha Evolução</span>
+    </div>
+    <div class="panel-card__tabs">
+      @for (p of [['1M','Último Mês'],['6M','Últ. 6 Meses'],['TOTAL','Período Total']]; track p[0]) {
+        <button type="button" class="panel-tab"
+                [class.panel-tab--active]="periodoEvolucao === p[0]"
+                (click)="setPeriodoEvolucao($any(p[0]))">{{ p[1] }}</button>
+      }
+    </div>
+    <div class="panel-card__body">
+      @if (loadingEvolucao) {
+        <app-loading-spinner></app-loading-spinner>
+      } @else if (dadosEvolucao.length === 0) {
+        <div class="alert alert-info mb-0 small">Nenhum dado para o período.</div>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-sm table-hover evo-table mb-0">
+            <thead>
+              <tr>
+                <th>Período</th>
+                <th class="text-center">Reun.</th>
+                <th class="text-center">Conex.</th>
+                <th class="text-center">Parc.</th>
+                <th class="text-center">Visit.</th>
+                <th class="text-end">Pontos</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (d of dadosEvolucao; track d.periodo) {
+                <tr>
+                  <td>{{ d.periodo }}</td>
+                  <td class="text-center">{{ d.reunioes }}</td>
+                  <td class="text-center">{{ d.conexoes }}</td>
+                  <td class="text-center">{{ d.parcerias }}</td>
+                  <td class="text-center">{{ d.visitantes }}</td>
+                  <td class="text-end fw-bold cc-primary">{{ d.pontos }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
   </div>
+
+  <!-- Painel 3: Performance da Equipe -->
+  <div class="panel-card">
+    <div class="panel-card__header">
+      <i class="fas fa-users me-2" style="color:#8b5cf6"></i>
+      <span>Performance da Equipe</span>
+    </div>
+    <div class="panel-card__tabs">
+      @for (p of [['1M','Mês'],['3M','3 Meses'],['TOTAL','Período Total']]; track p[0]) {
+        <button type="button" class="panel-tab"
+                [class.panel-tab--active]="periodoEquipe === p[0]"
+                (click)="setPeriodoEquipe($any(p[0]))">{{ p[1] }}</button>
+      }
+    </div>
+    <div class="panel-card__body">
+      @if (loadingEquipe) {
+        <app-loading-spinner></app-loading-spinner>
+      } @else if (dadosEquipe.length === 0) {
+        <div class="alert alert-info mb-0 small">Nenhum dado para o período.</div>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-sm table-hover evo-table mb-0">
+            <thead>
+              <tr>
+                <th>Período</th>
+                <th class="text-center">Reun.</th>
+                <th class="text-center">Conex.</th>
+                <th class="text-center">Parc.</th>
+                <th class="text-center">Visit.</th>
+                <th class="text-end">Pontos</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (d of dadosEquipe; track d.periodo) {
+                <tr>
+                  <td>{{ d.periodo }}</td>
+                  <td class="text-center">{{ d.reunioes }}</td>
+                  <td class="text-center">{{ d.conexoes }}</td>
+                  <td class="text-center">{{ d.parcerias }}</td>
+                  <td class="text-center">{{ d.visitantes }}</td>
+                  <td class="text-end fw-bold cc-purple">{{ d.pontos }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== Painéis 4: NR e NG ==================== -->
+<div class="panels-row mb-3">
+
+  <!-- NR — Negócios Recebidos -->
+  <div class="panel-card">
+    <div class="panel-card__header">
+      <i class="fas fa-inbox me-2 text-warning"></i>
+      <span>Negócios Recebidos (NR)</span>
+      <span class="panel-card__badge panel-card__badge--muted">Últimos 90 dias · pendentes</span>
+    </div>
+    <div class="panel-card__body">
+      @if (loadingNR) {
+        <app-loading-spinner></app-loading-spinner>
+      } @else if (conexoesNR.length === 0) {
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <p>Nenhum negócio recebido pendente.</p>
+        </div>
+      } @else {
+        <div class="nr-list">
+          @for (c of conexoesNR; track c.id) {
+            <div class="nr-item" [class]="statusClass(c.status)">
+              <div class="nr-item__top">
+                <span class="nr-item__contato">{{ c.nomeContato }}</span>
+                @if (c.prazoEstourado) {
+                  <span class="badge-prazo">Prazo Estourado</span>
+                }
+                <span class="nr-item__status-badge">{{ statusLabel(c.status) }}</span>
+              </div>
+              <div class="nr-item__meta">
+                <span><i class="fas fa-user-tie me-1"></i>{{ c.geradoPorNome }}</span>
+                @if (c.empresaContato) { <span><i class="fas fa-building me-1"></i>{{ c.empresaContato }}</span> }
+                @if (c.valorNegocio) { <span class="text-success fw-semibold"><i class="fas fa-coins me-1"></i>{{ c.valorNegocio | currency:'BRL':'symbol':'1.0-0' }}</span> }
+              </div>
+              <div class="nr-item__actions">
+                <a [routerLink]="['/operacional/conexoes', c.id]" class="btn btn-sm btn-outline-secondary">
+                  <i class="fas fa-eye me-1"></i>Ver detalhes
+                </a>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- NG — Negócios Gerados -->
+  <div class="panel-card">
+    <div class="panel-card__header">
+      <i class="fas fa-paper-plane me-2 text-info"></i>
+      <span>Negócios Gerados (NG)</span>
+      <span class="panel-card__badge panel-card__badge--muted">Acompanhe o progresso</span>
+    </div>
+    <div class="panel-card__body">
+      @if (loadingNG) {
+        <app-loading-spinner></app-loading-spinner>
+      } @else if (conexoesNG.length === 0) {
+        <div class="empty-state">
+          <i class="fas fa-paper-plane"></i>
+          <p>Nenhum negócio gerado registrado.</p>
+          <a routerLink="/operacional/conexoes/nova" class="btn btn-sm btn-primary mt-1">
+            <i class="fas fa-plus me-1"></i>Gerar conexão
+          </a>
+        </div>
+      } @else {
+        <div class="nr-list">
+          @for (c of conexoesNG; track c.id) {
+            <div class="nr-item" [class]="statusClass(c.status)">
+              <div class="nr-item__top">
+                <span class="nr-item__contato">{{ c.nomeContato }}</span>
+                @if (c.prazoEstourado) {
+                  <span class="badge-prazo">Prazo Estourado</span>
+                }
+                <span class="nr-item__status-badge">{{ statusLabel(c.status) }}</span>
+              </div>
+              <div class="nr-item__meta">
+                <span><i class="fas fa-user me-1"></i>{{ c.receptorNome }}</span>
+                @if (c.empresaContato) { <span><i class="fas fa-building me-1"></i>{{ c.empresaContato }}</span> }
+                @if (c.valorNegocio) { <span class="text-success fw-semibold"><i class="fas fa-coins me-1"></i>{{ c.valorNegocio | currency:'BRL':'symbol':'1.0-0' }}</span> }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
 </div>

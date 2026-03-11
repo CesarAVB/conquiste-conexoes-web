@@ -11,6 +11,8 @@ export interface IndicadorSemanal {
   acumulado: number;
   rotaAcao?: string;
   labelAcao?: string;
+  /** Se true, o acumulado é exibido como valor monetário (R$) */
+  isMoney?: boolean;
 }
 
 export interface EvolucaoItem {

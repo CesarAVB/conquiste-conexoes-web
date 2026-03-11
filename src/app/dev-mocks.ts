@@ -291,15 +291,15 @@ const TEEN_EVENTOS = [
   },
 ];
 
+// Indicadores corretos conforme especificação (3 colunas: Indicador, Ação, Acumulado)
 const INDICADORES_SEMANAIS = [
-  { nome: 'Reuniões 1×1', meta: 2, realizado: 2, acumulado: 8, rotaAcao: '/reunioes', labelAcao: 'Ver reuniões' },
-  { nome: 'Conexões Geradas', meta: 1, realizado: 3, acumulado: 14, rotaAcao: '/conexoes/nova', labelAcao: 'Nova conexão' },
-  { nome: 'Conexões Recebidas', meta: 0, realizado: 2, acumulado: 9 },
-  { nome: 'Reuniões Realizadas', meta: 2, realizado: 1, acumulado: 6 },
-  { nome: 'Prospects (NG)', meta: 2, realizado: 3, acumulado: 18 },
-  { nome: 'Parcerias (NR)', meta: 0, realizado: 1, acumulado: 4, rotaAcao: '/parcerias/nova', labelAcao: 'Nova parceria' },
-  { nome: 'Visitantes', meta: 0, realizado: 1, acumulado: 3 },
-  { nome: 'TEEn / PEEn', meta: 1, realizado: 1, acumulado: 7 },
+  { nome: 'PEEN', meta: 1, realizado: 1, acumulado: 5, rotaAcao: '/educacional/peen', labelAcao: 'Acessar PEEN' },
+  { nome: 'Reunião C+C', meta: 2, realizado: 2, acumulado: 2, rotaAcao: '/operacional/reunioes', labelAcao: 'Ver reuniões' },
+  { nome: 'Conexões', meta: 1, realizado: 3, acumulado: 3, rotaAcao: '/operacional/conexoes/nova', labelAcao: 'Nova conexão' },
+  { nome: 'NG (Negócios Gerados)', meta: 0, realizado: 1, acumulado: 33500, isMoney: true, rotaAcao: '/operacional/conexoes', labelAcao: 'Gerenciar' },
+  { nome: 'Parcerias', meta: 0, realizado: 1, acumulado: 1, rotaAcao: '/operacional/parcerias/nova', labelAcao: 'Nova parceria' },
+  { nome: 'NR (Negócios Recebidos)', meta: 0, realizado: 2, acumulado: 2 },
+  { nome: 'Visitantes', meta: 0, realizado: 1, acumulado: 1, rotaAcao: '/operacional/visitantes/externo', labelAcao: 'Registrar' },
 ];
 
 const EVOLUCAO = [

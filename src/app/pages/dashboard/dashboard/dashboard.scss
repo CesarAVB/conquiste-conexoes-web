@@ -1,152 +1,264 @@
-// ---- Header ----
-.dash-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-
-.dash-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--cc-text);
-  margin: 0 0 0.2rem;
-}
-
-.dash-subtitle {
-  font-size: 0.825rem;
-  color: var(--cc-text-muted);
-  margin: 0;
-}
-
-// ---- Stat cards row ----
-.dash-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.75rem;
-
-  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 576px)  { grid-template-columns: 1fr; }
-}
-
-.dash-stat {
+// ==================== Header ====================
+.home-header {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
-  background: #fff;
-  border: 1px solid var(--cc-border);
-  border-radius: var(--radius-lg);
-  padding: 1rem 1.125rem;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s, transform 0.2s;
-
-  &:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-
-  &__icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-
-    &--blue   { background: rgba(59,130,246,0.12);  color: #3b82f6; }
-    &--green  { background: rgba(16,185,129,0.12);  color: #10b981; }
-    &--purple { background: rgba(139,92,246,0.12);  color: #8b5cf6; }
-    &--amber  { background: rgba(245,158,11,0.12);  color: #f59e0b; }
-  }
-
-  &__body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  &__label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--cc-text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__hint {
-    font-size: 0.73rem;
-    color: var(--cc-text-muted);
-  }
-
-  &__link {
-    width: 28px;
-    height: 28px;
-    border-radius: 0.5rem;
-    background: var(--cc-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--cc-text-muted);
-    font-size: 0.75rem;
-    text-decoration: none;
-    flex-shrink: 0;
-    transition: background 0.15s, color 0.15s;
-
-    &:hover { background: var(--cc-primary); color: #fff; }
-  }
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-// ---- Section ----
-.dash-section__title {
-  font-size: 0.75rem;
+.home-title {
+  font-size: 1.2rem;
   font-weight: 700;
+  color: var(--cc-text);
+  margin: 0 0 0.15rem;
+}
+
+.home-subtitle {
+  font-size: 0.78rem;
   color: var(--cc-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 0 0 0.875rem;
+  margin: 0;
+  text-transform: capitalize;
 }
 
-// ---- Shortcuts grid ----
-.dash-shortcuts {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 0.75rem;
-
-  @media (max-width: 1200px) { grid-template-columns: repeat(4, 1fr); }
-  @media (max-width: 576px)  { grid-template-columns: repeat(2, 1fr); }
+// ==================== Shortcuts ====================
+.home-shortcuts {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.dash-shortcut {
+.shortcut-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 0.5rem;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
   background: #fff;
   border: 1px solid var(--cc-border);
-  border-radius: var(--radius-lg);
-  text-decoration: none;
+  border-radius: var(--radius-md, 0.5rem);
   color: var(--cc-text);
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-align: center;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 
-  i {
-    font-size: 1.35rem;
-    color: var(--cc-primary);
-    transition: color 0.2s;
-  }
+  i { font-size: 1rem; color: var(--cc-primary); }
 
   &:hover {
-    border-color: var(--cc-secondary);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-    color: var(--cc-text);
-
-    i { color: var(--cc-secondary); }
+    background: var(--cc-primary);
+    border-color: var(--cc-primary);
+    color: #fff;
+    i { color: #fff; }
   }
+}
+
+// ==================== Panel Card ====================
+.panel-card {
+  background: #fff;
+  border: 1px solid var(--cc-border);
+  border-radius: var(--radius-lg, 0.75rem);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--cc-border);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--cc-text);
+    background: var(--cc-bg, #f8f9fa);
+  }
+
+  &__badge {
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-weight: 500;
+    background: rgba(26,58,92,0.08);
+    color: var(--cc-primary);
+    border-radius: 20px;
+    padding: 0.15rem 0.6rem;
+
+    &--muted {
+      background: rgba(0,0,0,0.05);
+      color: var(--cc-text-muted);
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    border-bottom: 1px solid var(--cc-border);
+    background: #fff;
+    padding: 0 1.25rem;
+  }
+
+  &__body {
+    padding: 1rem 1.25rem;
+  }
+}
+
+.panel-tab {
+  border: none;
+  background: transparent;
+  padding: 0.6rem 0.875rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--cc-text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+
+  &--active {
+    color: var(--cc-primary);
+    border-bottom-color: var(--cc-primary);
+    font-weight: 600;
+  }
+
+  &:hover:not(.panel-tab--active) { color: var(--cc-text); }
+}
+
+// ==================== Two-column row ====================
+.panels-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+// ==================== Indicadores table ====================
+.ind-table {
+  th {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cc-text-muted);
+    border-top: none;
+  }
+
+  td { vertical-align: middle; }
+}
+
+.ind-table__nome {
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ind-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cc-primary);
+  flex-shrink: 0;
+
+  &--money { background: #10b981; }
+}
+
+.ind-acumulado {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cc-primary);
+}
+
+// ==================== Evolution table ====================
+.evo-table {
+  th {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cc-text-muted);
+    border-top: none;
+  }
+  td { font-size: 0.8rem; }
+}
+
+.cc-primary { color: var(--cc-primary) !important; }
+.cc-purple  { color: #8b5cf6 !important; }
+
+// ==================== NR/NG items ====================
+.nr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.nr-item {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md, 0.5rem);
+  border-left: 4px solid #d1d5db; // default: cinza
+  background: #f9fafb;
+
+  &.status--nova        { border-left-color: #9ca3af; background: #f9fafb; }
+  &.status--andamento   { border-left-color: #f59e0b; background: #fffbeb; }
+  &.status--fechada     { border-left-color: #10b981; background: #f0fdf8; }
+  &.status--nao-fechada { border-left-color: #ef4444; background: #fff5f5; }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+
+  &__contato {
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex: 1;
+  }
+
+  &__status-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.1rem 0.5rem;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.07);
+    color: var(--cc-text);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--cc-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  &__actions { display: flex; gap: 0.5rem; }
+}
+
+.badge-prazo {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  background: #ef4444;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+
+// ==================== Empty state ====================
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  color: var(--cc-text-muted);
+  text-align: center;
+
+  i { font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.4; }
+  p { font-size: 0.825rem; margin: 0; }
 }
