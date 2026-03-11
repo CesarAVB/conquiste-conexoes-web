@@ -1,1 +1,34 @@
-<p>sidebar works!</p>
+<!-- src/app/components/layout/sidebar/sidebar.component.html -->
+<aside class="sidebar" [class.open]="isOpen">
+  <nav class="mt-2">
+    @for (item of menuItems; track item.label) {
+      <!-- Item com filhos (submenu) -->
+      @if (item.children) {
+        <div class="nav-section">
+          <a class="nav-link" (click)="toggleSubmenu(item)">
+            <i [class]="item.icon + ' me-2'"></i>
+            <span>{{ item.label }}</span>
+            <i class="fas fa-chevron-down ms-auto transition-icon"
+               [class.rotated]="item.expanded"></i>
+          </a>
+          @if (item.expanded) {
+            <div class="submenu">
+              @for (child of item.children; track child.label) {
+                <a class="nav-link sub-item" [routerLink]="child.route" routerLinkActive="active">
+                  <i [class]="child.icon + ' me-2'"></i>
+                  <span>{{ child.label }}</span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- Item simples -->
+        <a class="nav-link" [routerLink]="item.route" routerLinkActive="active">
+          <i [class]="item.icon + ' me-2'"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    }
+  </nav>
+</aside>

@@ -1,1 +1,52 @@
-<p>login works!</p>
+<!-- src/app/pages/auth/login/login.component.html -->
+<div class="login-container">
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <i class="fas fa-handshake fa-3x text-cc-primary"></i>
+      <h2 class="mt-2 fw-bold text-cc-primary">C+C</h2>
+      <p class="text-muted">Conquiste + Conexões</p>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-1"></i> {{ error }}
+        <button type="button" class="btn-close" (click)="error = ''"></button>
+      </div>
+    }
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          <input type="email" class="form-control" [(ngModel)]="email" name="email"
+                 placeholder="seu@email.com" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Senha</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input type="password" class="form-control" [(ngModel)]="senha" name="senha"
+                 placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-cc-primary w-100" [disabled]="loading">
+        @if (loading) {
+          <span class="spinner-border spinner-border-sm me-1"></span> Entrando...
+        } @else {
+          <i class="fas fa-sign-in-alt me-1"></i> Entrar
+        }
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <small class="text-muted">
+        &copy; 2026
+        <a href="https://portfolio.cesaraugusto.dev.br/" target="_blank">César Augusto Vieira Bezerra</a>
+      </small>
+    </div>
+  </div>
+</div>

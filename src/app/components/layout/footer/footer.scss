@@ -1,0 +1,18 @@
+.footer-cc {
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    border-top: 1px solid #dee2e6;
+    background-color: #fff;
+
+    a {
+      color: #1a3a5c;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }

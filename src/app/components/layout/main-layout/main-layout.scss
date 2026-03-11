@@ -1,0 +1,23 @@
+.main-content {
+    margin-top: 56px;
+    margin-left: 250px;
+    padding: 20px;
+    min-height: calc(100vh - 56px);
+    transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+
+    &.sidebar-closed {
+      margin-left: 0;
+    }
+
+    router-outlet + * {
+      flex: 1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0;
+    }
+  }
