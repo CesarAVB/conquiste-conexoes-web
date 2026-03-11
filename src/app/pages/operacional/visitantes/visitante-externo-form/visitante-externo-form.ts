@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { VisitanteService } from '../../../../services/visitante';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
 
@@ -17,7 +17,7 @@ export class VisitanteExternoFormComponent {
   salvando = false;
   form = { nomeCompleto: '', cpf: '', telefone: '', email: '', profissao: '' };
 
-  constructor(private service: VisitanteService, private router: Router, private toastr: ToastrService) {}
+  constructor(private service: VisitanteService, private router: Router, private toastr: ToastService) {}
 
   salvar(): void {
     if (!this.form.nomeCompleto || !this.form.cpf) { this.toastr.warning('Nome e CPF são obrigatórios'); return; }

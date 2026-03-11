@@ -1,8 +1,73 @@
 // Bootstrap
 @use 'bootstrap/scss/bootstrap';
 
-// Toastr
-@use 'ngx-toastr/toastr';
+// Hot Toast
+@use '@ngxpert/hot-toast/src/styles/styles.scss';
+
+// ============================================
+// Hot Toast — Custom Theme
+// ============================================
+:root {
+  // Base toast
+  --hot-toast-bg: #ffffff;
+  --hot-toast-color: #1e293b;
+  --hot-toast-border-radius: 10px;
+  --hot-toast-shadow: 0 8px 24px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --hot-toast-padding: 12px 14px;
+  --hot-toast-max-width: 380px;
+  --hot-toast-margin: 8px;
+  --hot-toast-line: 1.4;
+
+  // Message
+  --hot-toast-message-margin: 4px 10px 4px 6px;
+
+  // Close button
+  --hot-toast-close-btn-opacity: 0.4;
+}
+
+// Shared base for all colored toasts
+.hot-toast-bar-base {
+  border-left: 4px solid transparent;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+// Error — red
+hot-toast-container .hot-toast-bar-base-container:has(.hot-toast-error-icon) .hot-toast-bar-base,
+hot-toast-container .hot-toast-bar-base-container.error .hot-toast-bar-base {
+  border-left-color: #ef4444;
+  background: #fff5f5;
+}
+
+// Success — green
+hot-toast-container .hot-toast-bar-base-container:has(.hot-toast-checkmark-icon) .hot-toast-bar-base,
+hot-toast-container .hot-toast-bar-base-container.success .hot-toast-bar-base {
+  border-left-color: #10b981;
+  background: #f0fdf8;
+}
+
+// Warning — amber
+hot-toast-container .hot-toast-bar-base-container:has(.hot-toast-warning-icon) .hot-toast-bar-base,
+hot-toast-container .hot-toast-bar-base-container.warning .hot-toast-bar-base {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+// Info — blue
+hot-toast-container .hot-toast-bar-base-container:has(.hot-toast-info-icon) .hot-toast-bar-base,
+hot-toast-container .hot-toast-bar-base-container.info .hot-toast-bar-base {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+}
+
+// Loading — primary
+hot-toast-container .hot-toast-bar-base-container:has(.hot-toast-loader-icon) .hot-toast-bar-base,
+hot-toast-container .hot-toast-bar-base-container.loading .hot-toast-bar-base {
+  border-left-color: #1a3a5c;
+  background: #f0f4f8;
+}
 
 // Font Awesome
 @import '@fortawesome/fontawesome-free/css/all.min.css';

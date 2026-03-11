@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { EducacionalService, TeenEvento } from '../../../../services/educacional';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -17,7 +17,7 @@ export class TeenEventosComponent implements OnInit {
   loading = true;
   eventos: TeenEvento[] = [];
 
-  constructor(private service: EducacionalService, private toastr: ToastrService) {}
+  constructor(private service: EducacionalService, private toastr: ToastService) {}
 
   ngOnInit(): void {
     this.service.listarTeen().subscribe({

@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ReuniaoService, Reuniao } from '../../../../services/reuniao';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -30,7 +30,7 @@ export class ReuniaoValidarComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: ReuniaoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

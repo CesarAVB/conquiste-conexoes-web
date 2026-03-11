@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ReuniaoService } from '../../../../services/reuniao';
 import { AssociadoService } from '../../../../services/associado';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -25,7 +25,7 @@ export class ReuniaoAgendarComponent {
     private service: ReuniaoService,
     private associadoService: AssociadoService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   buscar(): void {

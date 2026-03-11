@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { VisitanteService } from '../../../../services/visitante';
 import { EquipeService } from '../../../../services/equipe';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -19,7 +19,7 @@ export class VisitaInternaFormComponent implements OnInit {
   equipes: { id: number; nome: string }[] = [];
   form = { equipeDestinoId: 0, nomeCompleto: '', cpf: '', telefone: '' };
 
-  constructor(private service: VisitanteService, private equipeService: EquipeService, private router: Router, private toastr: ToastrService) {}
+  constructor(private service: VisitanteService, private equipeService: EquipeService, private router: Router, private toastr: ToastService) {}
 
   ngOnInit(): void {
     this.equipeService.listar().subscribe({ next: (r) => this.equipes = r.data });

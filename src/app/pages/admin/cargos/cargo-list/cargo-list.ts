@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { CargoLiderancaService } from '../../../../services/cargo-lideranca';
 import { CargoLideranca } from '../../../../models/cargo-lideranca.model';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -21,7 +21,7 @@ export class CargoListComponent implements OnInit {
   confirmVisible = false;
   selectedItem: CargoLideranca | null = null;
 
-  constructor(private cargoService: CargoLiderancaService, private toastr: ToastrService) {}
+  constructor(private cargoService: CargoLiderancaService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

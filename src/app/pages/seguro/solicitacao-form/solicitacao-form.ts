@@ -1,9 +1,9 @@
-// src/app/pages/seguro/solicitacao-form/solicitacao-form.ts
+﻿// src/app/pages/seguro/solicitacao-form/solicitacao-form.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { CadastroSeguroService } from '../../../services/cadastro-seguro';
 import { AssociadoService } from '../../../services/associado';
 import { SolicitacaoAlteracao } from '../../../models/solicitacao-alteracao.model';
@@ -41,7 +41,7 @@ export class SolicitacaoFormComponent implements OnInit {
     private router: Router,
     private seguroService: CadastroSeguroService,
     private associadoService: AssociadoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

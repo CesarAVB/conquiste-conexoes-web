@@ -1,8 +1,8 @@
-// src/app/pages/seguro/seguro-view/seguro-view.ts
+﻿// src/app/pages/seguro/seguro-view/seguro-view.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { CadastroSeguroService } from '../../../services/cadastro-seguro';
 import { CadastroSeguro } from '../../../models/cadastro-seguro.model';
 import { LoadingSpinner } from '../../../components/shared/loading-spinner/loading-spinner';
@@ -25,7 +25,7 @@ export class SeguroViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private seguroService: CadastroSeguroService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-enderecos/associado-enderecos.ts
+﻿// src/app/pages/associados/associado-enderecos/associado-enderecos.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EnderecoService } from '../../../services/endereco';
 import { Endereco } from '../../../models/endereco.model';
 import { ConfirmDialogComponent } from '../../../components/shared/confirm-dialog/confirm-dialog';
@@ -32,7 +32,7 @@ export class AssociadoEnderecosComponent implements OnInit {
 
   constructor(
     private enderecoService: EnderecoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void { this.carregar(); }

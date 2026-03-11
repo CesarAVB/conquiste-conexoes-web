@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-grupamentos/associado-grupamentos.ts
+﻿// src/app/pages/associados/associado-grupamentos/associado-grupamentos.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AssociadoGrupamentoService } from '../../../services/associado-grupamento';
 import { GrupamentoEstrategicoService } from '../../../services/grupamento-estrategico';
 import { AssociadoGrupamento } from '../../../models/associado-grupamento.model';
@@ -31,7 +31,7 @@ export class AssociadoGrupamentosComponent implements OnInit {
   constructor(
     private vinculoService: AssociadoGrupamentoService,
     private grupamentoService: GrupamentoEstrategicoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

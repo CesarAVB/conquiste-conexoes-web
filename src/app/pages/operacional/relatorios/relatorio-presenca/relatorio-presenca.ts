@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ReuniaoService, Reuniao } from '../../../../services/reuniao';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -28,7 +28,7 @@ export class RelatorioPresencaComponent implements OnInit {
   linhas: PresencaLinha[] = [];
   filtroMes = '';
 
-  constructor(private service: ReuniaoService, private toastr: ToastrService) {}
+  constructor(private service: ReuniaoService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

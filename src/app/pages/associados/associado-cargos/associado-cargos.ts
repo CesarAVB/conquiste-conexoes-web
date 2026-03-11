@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-cargos/associado-cargos.ts
+﻿// src/app/pages/associados/associado-cargos/associado-cargos.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AssociadoCargoService } from '../../../services/associado-cargo';
 import { CargoLiderancaService } from '../../../services/cargo-lideranca';
 import { AssociadoCargo } from '../../../models/associado-cargo.model';
@@ -32,7 +32,7 @@ export class AssociadoCargosComponent implements OnInit {
   constructor(
     private vinculoService: AssociadoCargoService,
     private cargoService: CargoLiderancaService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

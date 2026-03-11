@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ReuniaoService, Reuniao } from '../../../../services/reuniao';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -19,7 +19,7 @@ export class ReuniaoDetalheComponent implements OnInit {
 
   statusClass: Record<string, string> = { PENDENTE: 'bg-warning text-dark', REALIZADA: 'bg-success', ADIADA: 'bg-info text-dark', CANCELADA: 'bg-danger' };
 
-  constructor(private route: ActivatedRoute, private service: ReuniaoService, private toastr: ToastrService) {}
+  constructor(private route: ActivatedRoute, private service: ReuniaoService, private toastr: ToastService) {}
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;

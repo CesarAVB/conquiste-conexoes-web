@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { PainelService, EvolucaoItem } from '../../../../services/painel';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -18,7 +18,7 @@ export class PainelEvolucaoComponent implements OnInit {
   periodo: '1M' | '6M' | 'TOTAL' = '1M';
   dados: EvolucaoItem[] = [];
 
-  constructor(private service: PainelService, private toastr: ToastrService) {}
+  constructor(private service: PainelService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

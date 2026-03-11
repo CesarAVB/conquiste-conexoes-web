@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { PainelService, EvolucaoItem } from '../../../../services/painel';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -20,7 +20,7 @@ export class RelatorioConquistasComponent implements OnInit {
   dados: EvolucaoItem[] = [];
   totais = { conexoes: 0, ng: 0, parcerias: 0, nr: 0, visitantes: 0, pontos: 0 };
 
-  constructor(private service: PainelService, private toastr: ToastrService) {}
+  constructor(private service: PainelService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

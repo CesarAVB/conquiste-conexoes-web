@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { AtuacaoEspecificaService } from '../../../../services/atuacao-especifica';
 import { ClusterService } from '../../../../services/cluster';
 import { AtuacaoEspecifica } from '../../../../models/atuacao-especifica.model';
@@ -29,7 +29,7 @@ export class AtuacaoListComponent implements OnInit {
   constructor(
     private atuacaoService: AtuacaoEspecificaService,
     private clusterService: ClusterService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

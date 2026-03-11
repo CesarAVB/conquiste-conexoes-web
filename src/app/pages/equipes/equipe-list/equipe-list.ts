@@ -1,9 +1,9 @@
-// src/app/pages/equipes/equipe-list/equipe-list.ts
+﻿// src/app/pages/equipes/equipe-list/equipe-list.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EquipeService } from '../../../services/equipe';
 import { Equipe } from '../../../models/equipe.model';
 import { PageHeaderComponent } from '../../../components/shared/page-header/page-header';
@@ -30,7 +30,7 @@ export class EquipeListComponent implements OnInit {
 
   constructor(
     private equipeService: EquipeService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void { this.carregar(); }

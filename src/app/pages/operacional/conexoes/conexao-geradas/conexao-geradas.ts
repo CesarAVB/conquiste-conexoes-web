@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ConexaoService, Conexao } from '../../../../services/conexao';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -26,7 +26,7 @@ export class ConexaoGeradasComponent implements OnInit {
   statusClass: Record<string, string> = { NOVA: 'bg-secondary', EM_ANDAMENTO: 'bg-primary', FECHADA: 'bg-success', NAO_FECHADA: 'bg-danger' };
   statusLabel: Record<string, string> = { NOVA: 'Nova', EM_ANDAMENTO: 'Em Andamento', FECHADA: 'Fechada', NAO_FECHADA: 'Não Fechada' };
 
-  constructor(private service: ConexaoService, private toastr: ToastrService) {}
+  constructor(private service: ConexaoService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

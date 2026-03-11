@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ParametrizacaoPontuacaoService } from '../../../../services/parametrizacao-pontuacao';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
 
@@ -24,7 +24,7 @@ export class ParametrizacaoFormComponent implements OnInit {
 
   constructor(
     private paramService: ParametrizacaoPontuacaoService,
-    private router: Router, private route: ActivatedRoute, private toastr: ToastrService
+    private router: Router, private route: ActivatedRoute, private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

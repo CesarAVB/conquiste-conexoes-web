@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { HorarioReuniaoService } from '../../../../services/horario-reuniao';
 import { HorarioReuniao } from '../../../../models/horario-reuniao.model';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -21,7 +21,7 @@ export class HorarioListComponent implements OnInit {
   confirmVisible = false;
   selectedItem: HorarioReuniao | null = null;
 
-  constructor(private horarioService: HorarioReuniaoService, private toastr: ToastrService) {}
+  constructor(private horarioService: HorarioReuniaoService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

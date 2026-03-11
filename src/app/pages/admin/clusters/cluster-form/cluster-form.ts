@@ -1,9 +1,9 @@
-// src/app/pages/admin/clusters/cluster-form/cluster-form.ts
+﻿// src/app/pages/admin/clusters/cluster-form/cluster-form.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ClusterService } from '../../../../services/cluster';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
 
@@ -25,7 +25,7 @@ export class ClusterFormComponent implements OnInit {
     private clusterService: ClusterService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

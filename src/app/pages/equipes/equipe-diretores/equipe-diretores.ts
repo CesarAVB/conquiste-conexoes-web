@@ -1,8 +1,8 @@
-// src/app/pages/equipes/equipe-diretores/equipe-diretores.ts
+﻿// src/app/pages/equipes/equipe-diretores/equipe-diretores.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EquipeService } from '../../../services/equipe';
 import { AssociadoService } from '../../../services/associado';
 import { DiretorVinculo } from '../../../models/diretor-vinculo.model';
@@ -38,7 +38,7 @@ export class EquipeDiretoresComponent implements OnInit {
   constructor(
     private equipeService: EquipeService,
     private associadoService: AssociadoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void { this.carregar(); }

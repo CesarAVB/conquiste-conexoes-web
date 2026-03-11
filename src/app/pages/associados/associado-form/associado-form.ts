@@ -1,9 +1,9 @@
-// src/app/pages/associados/associado-form/associado-form.ts
+﻿// src/app/pages/associados/associado-form/associado-form.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AssociadoService } from '../../../services/associado';
 import { ClusterService } from '../../../services/cluster';
 import { AtuacaoEspecificaService } from '../../../services/atuacao-especifica';
@@ -62,7 +62,7 @@ export class AssociadoFormComponent implements OnInit {
     private equipeService: EquipeService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

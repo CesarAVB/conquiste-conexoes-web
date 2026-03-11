@@ -1,7 +1,7 @@
-// src/app/pages/equipes/equipe-ciclos/equipe-ciclos.ts
+﻿// src/app/pages/equipes/equipe-ciclos/equipe-ciclos.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EquipeService } from '../../../services/equipe';
 import { CicloSemanal } from '../../../models/ciclo-semanal.model';
 import { LoadingSpinner } from '../../../components/shared/loading-spinner/loading-spinner';
@@ -22,7 +22,7 @@ export class EquipeCiclosComponent implements OnInit {
 
   constructor(
     private equipeService: EquipeService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void { this.carregar(); }

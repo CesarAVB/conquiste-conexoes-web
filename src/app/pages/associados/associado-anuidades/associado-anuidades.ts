@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-anuidades/associado-anuidades.ts
+﻿// src/app/pages/associados/associado-anuidades/associado-anuidades.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AnuidadeService, RenovacaoPayload } from '../../../services/anuidade';
 import { Anuidade } from '../../../models/anuidade.model';
 import { LoadingSpinner } from '../../../components/shared/loading-spinner/loading-spinner';
@@ -28,7 +28,7 @@ export class AssociadoAnuidadesComponent implements OnInit {
 
   constructor(
     private anuidadeService: AnuidadeService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void { this.carregar(); }

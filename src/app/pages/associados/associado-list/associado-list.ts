@@ -1,9 +1,9 @@
-// src/app/pages/associados/associado-list/associado-list.ts
+﻿// src/app/pages/associados/associado-list/associado-list.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AssociadoService } from '../../../services/associado';
 import { ClusterService } from '../../../services/cluster';
 import { EquipeService } from '../../../services/equipe';
@@ -47,7 +47,7 @@ export class AssociadoListComponent implements OnInit {
     private associadoService: AssociadoService,
     private clusterService: ClusterService,
     private equipeService: EquipeService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

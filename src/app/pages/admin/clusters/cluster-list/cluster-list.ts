@@ -1,8 +1,8 @@
-// src/app/pages/admin/clusters/cluster-list/cluster-list.ts
+﻿// src/app/pages/admin/clusters/cluster-list/cluster-list.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ClusterService } from '../../../../services/cluster';
 import { Cluster } from '../../../../models/cluster.model';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -24,7 +24,7 @@ export class ClusterListComponent implements OnInit {
 
   constructor(
     private clusterService: ClusterService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

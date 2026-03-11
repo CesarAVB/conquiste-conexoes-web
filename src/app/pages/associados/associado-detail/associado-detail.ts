@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-detail/associado-detail.ts
+﻿// src/app/pages/associados/associado-detail/associado-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AssociadoService } from '../../../services/associado';
 import { Associado } from '../../../models/associado.model';
 import { PageHeaderComponent } from '../../../components/shared/page-header/page-header';
@@ -46,7 +46,7 @@ export class AssociadoDetailComponent implements OnInit {
     private associadoService: AssociadoService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

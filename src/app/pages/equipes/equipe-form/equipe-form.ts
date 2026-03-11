@@ -1,9 +1,9 @@
-// src/app/pages/equipes/equipe-form/equipe-form.ts
+﻿// src/app/pages/equipes/equipe-form/equipe-form.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EquipeService } from '../../../services/equipe';
 import { HorarioReuniaoService } from '../../../services/horario-reuniao';
 import { HorarioReuniao } from '../../../models/horario-reuniao.model';
@@ -56,7 +56,7 @@ export class EquipeFormComponent implements OnInit {
     private horarioService: HorarioReuniaoService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

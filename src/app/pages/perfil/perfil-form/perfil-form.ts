@@ -1,9 +1,9 @@
-// src/app/pages/perfil/perfil-form/perfil-form.ts
+﻿// src/app/pages/perfil/perfil-form/perfil-form.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { PerfilAssociadoService } from '../../../services/perfil-associado';
 import { PerfilAssociado } from '../../../models/perfil-associado.model';
 import { LoadingSpinner } from '../../../components/shared/loading-spinner/loading-spinner';
@@ -63,7 +63,7 @@ export class PerfilFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private perfilService: PerfilAssociadoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

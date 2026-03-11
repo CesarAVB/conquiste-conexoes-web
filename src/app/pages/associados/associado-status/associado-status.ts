@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-status/associado-status.ts
+﻿// src/app/pages/associados/associado-status/associado-status.ts
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { AssociadoService, AlterarStatusPayload } from '../../../services/associado';
 
 @Component({
@@ -42,7 +42,7 @@ export class AssociadoStatusComponent implements OnInit {
 
   constructor(
     private associadoService: AssociadoService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {}

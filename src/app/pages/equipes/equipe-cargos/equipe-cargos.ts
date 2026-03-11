@@ -1,8 +1,8 @@
-// src/app/pages/equipes/equipe-cargos/equipe-cargos.ts
+﻿// src/app/pages/equipes/equipe-cargos/equipe-cargos.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EquipeService } from '../../../services/equipe';
 import { CargoLiderancaService } from '../../../services/cargo-lideranca';
 import { CargoAtivoEquipe } from '../../../models/cargo-ativo-equipe.model';
@@ -28,7 +28,7 @@ export class EquipeCargosComponent implements OnInit {
   constructor(
     private equipeService: EquipeService,
     private cargoService: CargoLiderancaService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { ParametrizacaoPontuacaoService } from '../../../../services/parametrizacao-pontuacao';
 import { ParametrizacaoPontuacao } from '../../../../models/parametrizacao-pontuacao.model';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -21,7 +21,7 @@ export class ParametrizacaoListComponent implements OnInit {
   confirmVisible = false;
   selectedItem: ParametrizacaoPontuacao | null = null;
 
-  constructor(private paramService: ParametrizacaoPontuacaoService, private toastr: ToastrService) {}
+  constructor(private paramService: ParametrizacaoPontuacaoService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

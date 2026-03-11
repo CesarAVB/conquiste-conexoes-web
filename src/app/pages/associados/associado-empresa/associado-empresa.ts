@@ -1,8 +1,8 @@
-// src/app/pages/associados/associado-empresa/associado-empresa.ts
+﻿// src/app/pages/associados/associado-empresa/associado-empresa.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EmpresaService } from '../../../services/empresa';
 import { Empresa } from '../../../models/empresa.model';
 import { LoadingSpinner } from '../../../components/shared/loading-spinner/loading-spinner';
@@ -26,7 +26,7 @@ export class AssociadoEmpresaComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void { this.carregar(); }

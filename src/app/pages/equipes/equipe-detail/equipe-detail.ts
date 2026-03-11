@@ -1,8 +1,8 @@
-// src/app/pages/equipes/equipe-detail/equipe-detail.ts
+﻿// src/app/pages/equipes/equipe-detail/equipe-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast';
 import { EquipeService } from '../../../services/equipe';
 import { Equipe } from '../../../models/equipe.model';
 import { PageHeaderComponent } from '../../../components/shared/page-header/page-header';
@@ -45,7 +45,7 @@ export class EquipeDetailComponent implements OnInit {
     private equipeService: EquipeService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {}
 
   ngOnInit(): void {

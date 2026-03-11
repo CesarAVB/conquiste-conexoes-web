@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { VisitanteService, Visitante } from '../../../../services/visitante';
 import { LoadingSpinner } from '../../../../components/shared/loading-spinner/loading-spinner';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -21,7 +21,7 @@ export class VisitanteValidacaoComponent implements OnInit {
   tipoLabel: Record<string, string> = { EXTERNO: 'Externo', INTERNO: 'Interno', SUBSTITUTO: 'Substituto' };
   tipoClass: Record<string, string> = { EXTERNO: 'bg-info text-dark', INTERNO: 'bg-primary', SUBSTITUTO: 'bg-warning text-dark' };
 
-  constructor(private service: VisitanteService, private toastr: ToastrService) {}
+  constructor(private service: VisitanteService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 

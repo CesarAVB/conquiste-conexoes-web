@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../services/toast';
 import { GrupamentoEstrategicoService } from '../../../../services/grupamento-estrategico';
 import { GrupamentoEstrategico } from '../../../../models/grupamento-estrategico.model';
 import { PageHeaderComponent } from '../../../../components/shared/page-header/page-header';
@@ -21,7 +21,7 @@ export class GrupamentoListComponent implements OnInit {
   confirmVisible = false;
   selectedItem: GrupamentoEstrategico | null = null;
 
-  constructor(private grupamentoService: GrupamentoEstrategicoService, private toastr: ToastrService) {}
+  constructor(private grupamentoService: GrupamentoEstrategicoService, private toastr: ToastService) {}
 
   ngOnInit(): void { this.carregar(); }
 
