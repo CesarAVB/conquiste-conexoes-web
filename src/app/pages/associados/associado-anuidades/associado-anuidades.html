@@ -1,1 +1,76 @@
-<p>associado-anuidades works!</p>
+<!-- src/app/pages/associados/associado-anuidades/associado-anuidades.html -->
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h6 class="mb-0"><i class="fas fa-calendar-check me-1"></i> Anuidades</h6>
+    <button class="btn btn-cc-primary btn-sm" (click)="modoRenovacao = !modoRenovacao">
+      <i class="fas {{ modoRenovacao ? 'fa-times' : 'fa-rotate' }} me-1"></i>
+      {{ modoRenovacao ? 'Cancelar' : 'Renovar Anuidade' }}
+    </button>
+  </div>
+
+  @if (modoRenovacao) {
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-12 col-md-4">
+            <label class="form-label">Status de Pagamento <span class="text-danger">*</span></label>
+            <select class="form-select" [(ngModel)]="formRenovacao.statusPagamento" name="statusPagamento">
+              @for (s of statusOpcoes; track s) {
+                <option [value]="s">{{ s }}</option>
+              }
+            </select>
+          </div>
+          @if (formRenovacao.statusPagamento === 'PAGO') {
+            <div class="col-12 col-md-4">
+              <label class="form-label">Data do Pagamento</label>
+              <input type="date" class="form-control" [(ngModel)]="formRenovacao.dataPagamento" name="dataPagamento">
+            </div>
+          }
+          <div class="col-12 d-flex align-items-end">
+            <button class="btn btn-cc-primary" (click)="renovar()" [disabled]="loadingRenovar">
+              @if (loadingRenovar) { <span class="spinner-border spinner-border-sm me-1"></span> } @else { <i class="fas fa-rotate me-1"></i> }
+              Confirmar Renovação
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (ultimaAnuidade()) {
+    <div class="alert alert-{{ ultimaAnuidade()!.statusPagamento === 'PAGO' ? 'success' : 'warning' }}">
+      <i class="fas fa-info-circle me-1"></i>
+      <strong>Vencimento atual:</strong> {{ ultimaAnuidade()!.vencimentoGerado | date:'dd/MM/yyyy' }}
+      &mdash; <span class="badge {{ badgePagamento(ultimaAnuidade()!.statusPagamento) }}">{{ ultimaAnuidade()!.statusPagamento }}</span>
+    </div>
+  }
+
+  @if (anuidades.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i> Nenhuma anuidade registrada.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Tipo</th>
+            <th>Vencimento</th>
+            <th>Pagamento</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (a of anuidades; track a.id) {
+            <tr>
+              <td><span class="badge bg-secondary">{{ a.tipo }}</span></td>
+              <td>{{ a.vencimentoGerado | date:'dd/MM/yyyy' }}</td>
+              <td>{{ a.dataPagamento ? (a.dataPagamento | date:'dd/MM/yyyy') : '—' }}</td>
+              <td><span class="badge {{ badgePagamento(a.statusPagamento) }}">{{ a.statusPagamento }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

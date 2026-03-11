@@ -1,1 +1,86 @@
-<p>associado-cargos works!</p>
+<!-- src/app/pages/associados/associado-cargos/associado-cargos.html -->
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h6 class="mb-0"><i class="fas fa-award me-1"></i> Cargos</h6>
+    <button class="btn btn-cc-primary btn-sm" (click)="modoForm = !modoForm">
+      <i class="fas {{ modoForm ? 'fa-times' : 'fa-plus' }} me-1"></i> {{ modoForm ? 'Cancelar' : 'Vincular Cargo' }}
+    </button>
+  </div>
+
+  @if (modoForm) {
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-12 col-md-5">
+            <label class="form-label">Cargo <span class="text-danger">*</span></label>
+            <select class="form-select" [(ngModel)]="form.cargoId" name="cargoId">
+              <option value="">Selecione...</option>
+              @for (c of cargos; track c.id) {
+                <option [value]="c.id">{{ c.nome }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label">Data Início <span class="text-danger">*</span></label>
+            <input type="date" class="form-control" [(ngModel)]="form.dataInicio" name="dataInicio">
+          </div>
+          <div class="col-12 col-md-4 d-flex align-items-end">
+            <button class="btn btn-cc-primary" (click)="vincular()" [disabled]="loadingForm">
+              @if (loadingForm) { <span class="spinner-border spinner-border-sm me-1"></span> } @else { <i class="fas fa-link me-1"></i> }
+              Vincular
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (vinculos.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i> Nenhum cargo vinculado.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Cargo</th>
+            <th>Início</th>
+            <th>Fim</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (v of vinculos; track v.id) {
+            <tr>
+              <td>{{ v.cargoNome }}</td>
+              <td>{{ v.dataInicio | date:'dd/MM/yyyy' }}</td>
+              <td>{{ v.dataFim ? (v.dataFim | date:'dd/MM/yyyy') : '—' }}</td>
+              <td>
+                <span class="badge {{ cargoAtivo(v) ? 'bg-success' : 'bg-secondary' }}">
+                  {{ cargoAtivo(v) ? 'Ativo' : 'Encerrado' }}
+                </span>
+              </td>
+              <td>
+                @if (cargoAtivo(v)) {
+                  @if (encerrando === v.id) {
+                    <div class="d-flex gap-1">
+                      <input type="date" class="form-control form-control-sm" [(ngModel)]="dataFimEncerrar" style="width:140px">
+                      <button class="btn btn-danger btn-sm" (click)="encerrar()">Encerrar</button>
+                      <button class="btn btn-outline-secondary btn-sm" (click)="cancelarEncerramento()">Cancelar</button>
+                    </div>
+                  } @else {
+                    <button class="btn btn-outline-danger btn-sm" (click)="iniciarEncerramento(v.id)">
+                      <i class="fas fa-stop"></i>
+                    </button>
+                  }
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

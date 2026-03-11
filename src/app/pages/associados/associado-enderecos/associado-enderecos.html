@@ -1,1 +1,122 @@
-<p>associado-enderecos works!</p>
+<!-- src/app/pages/associados/associado-enderecos/associado-enderecos.html -->
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  @if (!modoForm) {
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h6 class="mb-0"><i class="fas fa-map-marker-alt me-1"></i> Endereços</h6>
+      <button class="btn btn-cc-primary btn-sm" (click)="novo()">
+        <i class="fas fa-plus me-1"></i> Adicionar
+      </button>
+    </div>
+
+    @if (enderecos.length === 0) {
+      <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i> Nenhum endereço cadastrado.</div>
+    } @else {
+      <div class="row g-3">
+        @for (e of enderecos; track e.id) {
+          <div class="col-12 col-md-6">
+            <div class="card h-100">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                  <i class="fas {{ e.tipo === 'RESIDENCIAL' ? 'fa-home' : 'fa-building' }} me-1"></i>
+                  {{ e.tipo === 'RESIDENCIAL' ? 'Residencial' : 'Comercial' }}
+                </span>
+                <div class="d-flex gap-1">
+                  @if (e.tipo === 'COMERCIAL') {
+                    <span class="badge {{ e.visivelParaRede ? 'bg-success' : 'bg-secondary' }}">
+                      {{ e.visivelParaRede ? 'Visível na rede' : 'Oculto' }}
+                    </span>
+                  }
+                  <button class="btn btn-outline-primary btn-sm" (click)="editar(e)"><i class="fas fa-edit"></i></button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="confirmarExcluir(e)"><i class="fas fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="mb-1">{{ e.rua }}, {{ e.numero }}{{ e.complemento ? ' - ' + e.complemento : '' }}</p>
+                <p class="mb-1">{{ e.bairro }} &mdash; {{ e.cidade }}/{{ e.estado }}</p>
+                <p class="mb-0">CEP: {{ e.cep }}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <!-- Formulário -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-map-marker-alt me-1"></i> {{ selecionado ? 'Editar Endereço' : 'Novo Endereço' }}
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-3">
+            <label class="form-label">Tipo</label>
+            <select class="form-select" [(ngModel)]="form.tipo" name="tipo">
+              @for (t of tipoOpcoes; track t) {
+                <option [value]="t">{{ t === 'RESIDENCIAL' ? 'Residencial' : 'Comercial' }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label">Rua / Logradouro <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="form.rua" name="rua" placeholder="Nome da rua">
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label">Número</label>
+            <input type="text" class="form-control" [(ngModel)]="form.numero" name="numero">
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="form-label">Complemento</label>
+            <input type="text" class="form-control" [(ngModel)]="form.complemento" name="complemento">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">Bairro</label>
+            <input type="text" class="form-control" [(ngModel)]="form.bairro" name="bairro">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">Cidade</label>
+            <input type="text" class="form-control" [(ngModel)]="form.cidade" name="cidade">
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label">Estado</label>
+            <select class="form-select" [(ngModel)]="form.estado" name="estado">
+              <option value="">UF</option>
+              @for (uf of estados; track uf) {
+                <option [value]="uf">{{ uf }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label">CEP</label>
+            <input type="text" class="form-control" [ngModel]="form.cep" name="cep"
+                   (ngModelChange)="aplicarMascaraCep($event)" placeholder="00000-000">
+          </div>
+          @if (form.tipo === 'COMERCIAL') {
+            <div class="col-12">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="form.visivelParaRede" name="visivelParaRede" id="visivelRede">
+                <label class="form-check-label" for="visivelRede">Endereço visível para a rede</label>
+              </div>
+            </div>
+          }
+          <div class="col-12 d-flex gap-2">
+            <button class="btn btn-cc-primary" (click)="salvar()" [disabled]="loadingForm">
+              @if (loadingForm) { <span class="spinner-border spinner-border-sm me-1"></span> } @else { <i class="fas fa-save me-1"></i> }
+              Salvar
+            </button>
+            <button class="btn btn-outline-secondary" (click)="cancelar()"><i class="fas fa-times me-1"></i> Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <app-confirm-dialog
+    [visible]="confirmVisible"
+    title="Remover Endereço"
+    message="Deseja remover este endereço?"
+    (confirmed)="excluir()"
+    (cancelled)="cancelarExcluir()">
+  </app-confirm-dialog>
+}

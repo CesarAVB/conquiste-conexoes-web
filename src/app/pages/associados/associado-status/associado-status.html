@@ -1,1 +1,86 @@
-<p>associado-status works!</p>
+<!-- src/app/pages/associados/associado-status/associado-status.html -->
+<div class="modal d-block" tabindex="-1" style="background:rgba(0,0,0,0.4)">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-exchange-alt me-2"></i>Alterar Status</h5>
+        <button type="button" class="btn-close" (click)="fechado.emit()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Status Atual</label>
+          <p class="form-control-plaintext fw-semibold">{{ statusAtual }}</p>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Novo Status <span class="text-danger">*</span></label>
+          <select class="form-select" [(ngModel)]="form.novoStatus" name="novoStatus">
+            <option value="">Selecione...</option>
+            @for (s of statusOpcoes; track s.valor) {
+              @if (s.valor !== statusAtual) {
+                <option [value]="s.valor">{{ s.label }}</option>
+              }
+            }
+          </select>
+        </div>
+
+        @if (precisaMotivo) {
+          <div class="mb-3">
+            <label class="form-label">Motivo <span class="text-danger">*</span></label>
+            <textarea class="form-control" [(ngModel)]="form.motivo" name="motivo" rows="3"
+                      placeholder="Descreva o motivo..."></textarea>
+          </div>
+        }
+
+        @if (precisaDatas) {
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label">Inicio da Pausa <span class="text-danger">*</span></label>
+              <input type="date" class="form-control" [(ngModel)]="form.dataInicioPausa" name="dataInicioPausa">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Previsão de Retorno <span class="text-danger">*</span></label>
+              <input type="date" class="form-control" [(ngModel)]="form.dataPrevistaRetorno" name="dataPrevistaRetorno">
+            </div>
+          </div>
+        }
+
+        <!-- Responsável -->
+        <div class="mb-3">
+          <label class="form-label">Responsável pela Alteração <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="buscaResponsavel" name="buscaResponsavel"
+                   placeholder="Buscar por nome ou CPF..." (keyup.enter)="buscarResponsavel()">
+            <button type="button" class="btn btn-outline-secondary" (click)="buscarResponsavel()"
+                    [disabled]="buscandoResponsavel">
+              @if (buscandoResponsavel) {
+                <span class="spinner-border spinner-border-sm"></span>
+              } @else {
+                <i class="fas fa-search"></i>
+              }
+            </button>
+          </div>
+          @if (responsaveis.length > 0) {
+            <ul class="list-group mt-1">
+              @for (r of responsaveis; track r.id) {
+                <li class="list-group-item list-group-item-action" style="cursor:pointer"
+                    (click)="selecionarResponsavel(r)">
+                  {{ r.nomeCompleto }} &mdash; <small class="text-muted">{{ r.cpf }}</small>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" (click)="fechado.emit()">
+          <i class="fas fa-times me-1"></i> Cancelar
+        </button>
+        <button class="btn btn-cc-primary" (click)="salvar()" [disabled]="loading">
+          @if (loading) { <span class="spinner-border spinner-border-sm me-1"></span> } @else { <i class="fas fa-save me-1"></i> }
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

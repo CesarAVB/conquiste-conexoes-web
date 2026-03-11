@@ -1,1 +1,160 @@
-<p>associado-detail works!</p>
+<!-- src/app/pages/associados/associado-detail/associado-detail.html -->
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (associado) {
+
+  <app-page-header
+    [title]="associado.nomeCompleto"
+    subtitle="Detalhes do Associado"
+    icon="fas fa-user"
+    [btnLabel]="'Editar'"
+    [btnRoute]="'/associados/editar/' + associado.id">
+  </app-page-header>
+
+  <!-- Cards de resumo -->
+  <div class="row g-3 mb-3">
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <div class="mb-1"><i class="fas fa-id-card fa-lg text-primary"></i></div>
+          <small class="text-muted d-block">CPF</small>
+          <strong>{{ associado.cpf }}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <div class="mb-1"><i class="fas fa-layer-group fa-lg text-info"></i></div>
+          <small class="text-muted d-block">Cluster</small>
+          <strong>{{ associado.clusterNome || '—' }}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <div class="mb-1"><i class="fas fa-briefcase fa-lg text-warning"></i></div>
+          <small class="text-muted d-block">Atuação</small>
+          <strong>{{ associado.atuacaoEspecificaNome || '—' }}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <div class="mb-1"><i class="fas fa-circle-dot fa-lg"></i></div>
+          <small class="text-muted d-block">Status</small>
+          <span class="badge {{ badgeStatus(associado.status) }}">{{ labelStatus(associado.status) }}</span>
+          <div class="mt-2">
+            <button class="btn btn-outline-secondary btn-sm" (click)="modalStatusVisivel = true">
+              Alterar Status
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abas -->
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'dados'" (click)="abaAtiva = 'dados'">
+        <i class="fas fa-user me-1"></i> Dados
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'enderecos'" (click)="abaAtiva = 'enderecos'">
+        <i class="fas fa-map-marker-alt me-1"></i> Endereços
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'empresa'" (click)="abaAtiva = 'empresa'">
+        <i class="fas fa-building me-1"></i> Empresa
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'cargos'" (click)="abaAtiva = 'cargos'">
+        <i class="fas fa-award me-1"></i> Cargos
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'grupamentos'" (click)="abaAtiva = 'grupamentos'">
+        <i class="fas fa-tags me-1"></i> Grupamentos
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'anuidades'" (click)="abaAtiva = 'anuidades'">
+        <i class="fas fa-calendar-check me-1"></i> Anuidades
+      </button>
+    </li>
+  </ul>
+
+  <!-- Conteúdo da aba -->
+  @if (abaAtiva === 'dados') {
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <small class="text-muted">E-mail</small>
+            <p class="mb-0">{{ associado.email }}</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <small class="text-muted">WhatsApp</small>
+            <p class="mb-0">{{ associado.whatsapp || '—' }}</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <small class="text-muted">Data de Nascimento</small>
+            <p class="mb-0">{{ associado.dataNascimento ? (associado.dataNascimento | date:'dd/MM/yyyy') : '—' }}</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <small class="text-muted">Data de Ingresso</small>
+            <p class="mb-0">{{ associado.dataIngresso ? (associado.dataIngresso | date:'dd/MM/yyyy') : '—' }}</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <small class="text-muted">Vencimento Atual</small>
+            <p class="mb-0">{{ associado.vencimentoAtual ? (associado.vencimentoAtual | date:'dd/MM/yyyy') : '—' }}</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <small class="text-muted">Padrinho</small>
+            <p class="mb-0">{{ associado.padrinhoNome || '—' }}</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <small class="text-muted">Aniversario na Rede</small>
+            <p class="mb-0">{{ associado.mostrarAniversarioRede ? 'Sim' : 'Não' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (abaAtiva === 'enderecos') {
+    <app-associado-enderecos [associadoId]="id"></app-associado-enderecos>
+  }
+
+  @if (abaAtiva === 'empresa') {
+    <app-associado-empresa [associadoId]="id"></app-associado-empresa>
+  }
+
+  @if (abaAtiva === 'cargos') {
+    <app-associado-cargos [associadoId]="id"></app-associado-cargos>
+  }
+
+  @if (abaAtiva === 'grupamentos') {
+    <app-associado-grupamentos [associadoId]="id"></app-associado-grupamentos>
+  }
+
+  @if (abaAtiva === 'anuidades') {
+    <app-associado-anuidades [associadoId]="id"></app-associado-anuidades>
+  }
+
+  <!-- Modal de alteração de status -->
+  @if (modalStatusVisivel) {
+    <app-associado-status
+      [associadoId]="id"
+      [statusAtual]="associado.status"
+      (fechado)="modalStatusVisivel = false"
+      (statusAlterado)="onStatusAlterado()">
+    </app-associado-status>
+  }
+}

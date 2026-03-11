@@ -1,1 +1,160 @@
-<p>associado-form works!</p>
+<!-- src/app/pages/associados/associado-form/associado-form.html -->
+<app-page-header
+  [title]="isEdit ? 'Editar Associado' : 'Novo Associado'"
+  icon="fas fa-user-plus">
+</app-page-header>
+
+<form (ngSubmit)="salvar()">
+  <!-- Dados Pessoais -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-header">
+      <i class="fas fa-user me-2"></i>Dados Pessoais
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Nome Completo <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.nomeCompleto" name="nomeCompleto"
+                 placeholder="Nome completo do associado" required maxlength="150">
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">CPF <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [ngModel]="form.cpf" name="cpf"
+                 (ngModelChange)="aplicarMascaraCpf($event)"
+                 placeholder="000.000.000-00" maxlength="14" required>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Data de Nascimento</label>
+          <input type="date" class="form-control" [(ngModel)]="form.dataNascimento" name="dataNascimento">
+        </div>
+        <div class="col-12 col-md-5">
+          <label class="form-label">E-mail <span class="text-danger">*</span></label>
+          <input type="email" class="form-control" [(ngModel)]="form.email" name="email"
+                 placeholder="email@exemplo.com" required>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">WhatsApp</label>
+          <input type="text" class="form-control" [ngModel]="form.whatsapp" name="whatsapp"
+                 (ngModelChange)="aplicarMascaraTelefone($event)"
+                 placeholder="(00) 00000-0000" maxlength="15">
+        </div>
+        <div class="col-12 col-md-3 d-flex align-items-end">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="form.mostrarAniversarioRede"
+                   name="mostrarAniversarioRede" id="mostrarAniversario">
+            <label class="form-check-label" for="mostrarAniversario">Exibir aniversário na rede</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dados C+C -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-header">
+      <i class="fas fa-id-badge me-2"></i>Dados C+C
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <label class="form-label">Data de Ingresso</label>
+          <input type="date" class="form-control" [(ngModel)]="form.dataIngresso" name="dataIngresso">
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Cluster</label>
+          <select class="form-select" [(ngModel)]="form.clusterId" name="clusterId" (change)="onClusterChange()">
+            <option value="">Selecione um cluster...</option>
+            @for (c of clusters; track c.id) {
+              <option [value]="c.id">{{ c.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Atuação Específica</label>
+          <select class="form-select" [(ngModel)]="form.atuacaoEspecificaId" name="atuacaoEspecificaId"
+                  [disabled]="!form.clusterId || loadingAtuacoes">
+            <option value="">
+              @if (loadingAtuacoes) { Carregando... } @else { Selecione... }
+            </option>
+            @for (a of atuacoes; track a.id) {
+              <option [value]="a.id">{{ a.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Equipe Atual</label>
+          <select class="form-select" [(ngModel)]="form.equipeAtualId" name="equipeAtualId">
+            <option value="">Selecione...</option>
+            @for (e of equipes; track e.id) {
+              <option [value]="e.id">{{ e.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Equipe Origem</label>
+          <select class="form-select" [(ngModel)]="form.equipeOrigemId" name="equipeOrigemId">
+            <option value="">Selecione...</option>
+            @for (e of equipes; track e.id) {
+              <option [value]="e.id">{{ e.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Tipo Origem</label>
+          <select class="form-select" [(ngModel)]="form.equipeOrigemTipo" name="equipeOrigemTipo">
+            <option value="">Selecione...</option>
+            @for (o of origemOpcoes; track o.valor) {
+              <option [value]="o.valor">{{ o.label }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Padrinho -->
+        <div class="col-12">
+          <label class="form-label">Padrinho / Madrinha</label>
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="buscaPadrinho" name="buscaPadrinho"
+                   placeholder="Buscar por nome ou CPF..." (keyup.enter)="buscarPadrinho()">
+            <button type="button" class="btn btn-outline-secondary" (click)="buscarPadrinho()"
+                    [disabled]="buscandoPadrinho">
+              @if (buscandoPadrinho) {
+                <span class="spinner-border spinner-border-sm"></span>
+              } @else {
+                <i class="fas fa-search"></i>
+              }
+            </button>
+          </div>
+          @if (padrinhoResultados.length > 0) {
+            <ul class="list-group mt-1">
+              @for (p of padrinhoResultados; track p.id) {
+                <li class="list-group-item list-group-item-action" style="cursor:pointer"
+                    (click)="selecionarPadrinho(p)">
+                  {{ p.nomeCompleto }} &mdash; <small class="text-muted">{{ p.cpf }}</small>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botoes -->
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-cc-primary" [disabled]="loading">
+      @if (loading) {
+        <span class="spinner-border spinner-border-sm me-1"></span> Salvando...
+      } @else {
+        <i class="fas fa-save me-1"></i> Salvar
+      }
+    </button>
+    <a routerLink="/associados" class="btn btn-outline-secondary">
+      <i class="fas fa-arrow-left me-1"></i> Voltar
+    </a>
+  </div>
+</form>

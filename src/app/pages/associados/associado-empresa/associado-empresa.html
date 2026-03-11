@@ -1,1 +1,58 @@
-<p>associado-empresa works!</p>
+<!-- src/app/pages/associados/associado-empresa/associado-empresa.html -->
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  @if (!modoForm) {
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h6 class="mb-0"><i class="fas fa-building me-1"></i> Empresa</h6>
+      <button class="btn btn-cc-primary btn-sm" (click)="editar()">
+        <i class="fas {{ empresa ? 'fa-edit' : 'fa-plus' }} me-1"></i> {{ empresa ? 'Editar' : 'Cadastrar' }}
+      </button>
+    </div>
+
+    @if (!empresa) {
+      <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i> Nenhuma empresa cadastrada.</div>
+    } @else {
+      <div class="card">
+        <div class="card-body">
+          <div class="row g-2">
+            <div class="col-12 col-md-6">
+              <small class="text-muted">Razão Social</small>
+              <p class="mb-0 fw-semibold">{{ empresa.razaoSocial }}</p>
+            </div>
+            <div class="col-12 col-md-4">
+              <small class="text-muted">CNPJ</small>
+              <p class="mb-0">{{ empresa.cnpj || '—' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-building me-1"></i> {{ empresa ? 'Editar Empresa' : 'Cadastrar Empresa' }}
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="form-label">Razão Social <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="form.razaoSocial" name="razaoSocial" placeholder="Nome da empresa">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">CNPJ</label>
+            <input type="text" class="form-control" [ngModel]="form.cnpj" name="cnpj"
+                   (ngModelChange)="aplicarMascaraCnpj($event)" placeholder="00.000.000/0000-00" maxlength="18">
+          </div>
+          <div class="col-12 d-flex gap-2">
+            <button class="btn btn-cc-primary" (click)="salvar()" [disabled]="loadingForm">
+              @if (loadingForm) { <span class="spinner-border spinner-border-sm me-1"></span> } @else { <i class="fas fa-save me-1"></i> }
+              Salvar
+            </button>
+            <button class="btn btn-outline-secondary" (click)="cancelar()"><i class="fas fa-times me-1"></i> Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+}
