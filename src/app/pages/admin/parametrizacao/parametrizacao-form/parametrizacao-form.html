@@ -1,1 +1,33 @@
-<p>parametrizacao-form works!</p>
+<app-page-header [title]="isEdit ? 'Editar Faixa' : 'Nova Faixa'" icon="fas fa-star"></app-page-header>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form (ngSubmit)="salvar()">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Faixa Mínima <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" [(ngModel)]="faixaMinima" name="faixaMinima"
+                 placeholder="Ex: 15" min="1" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Faixa Máxima <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" [(ngModel)]="faixaMaxima" name="faixaMaxima"
+                 placeholder="Ex: 24" min="1" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Pontuação <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" [(ngModel)]="pontuacao" name="pontuacao"
+                 placeholder="Ex: 20" min="1" required>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-cc-primary" [disabled]="loading">
+          @if (loading) { <span class="spinner-border spinner-border-sm me-1"></span> Salvando... }
+          @else { <i class="fas fa-save me-1"></i> Salvar }
+        </button>
+        <a routerLink="/admin/parametrizacao" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i> Voltar</a>
+      </div>
+    </form>
+  </div>
+</div>

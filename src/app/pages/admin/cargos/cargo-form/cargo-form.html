@@ -1,1 +1,36 @@
-<p>cargo-form works!</p>
+<app-page-header [title]="isEdit ? 'Editar Cargo' : 'Novo Cargo'" icon="fas fa-user-tag"></app-page-header>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form (ngSubmit)="salvar()">
+      <div class="mb-3">
+        <label class="form-label">Nome do Cargo <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" [(ngModel)]="nome" name="nome"
+               placeholder="Ex: Diretor de Território 1" maxlength="100" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Classificação <span class="text-danger">*</span></label>
+        <select class="form-select" [(ngModel)]="classificacao" name="classificacao" required>
+          <option value="NORMAL">Normal</option>
+          <option value="ISENTO">Isento</option>
+        </select>
+        <small class="text-muted">
+          @if (classificacao === 'ISENTO') {
+            <i class="fas fa-info-circle me-1"></i> Isento de pagamento e metodologia
+          } @else {
+            <i class="fas fa-info-circle me-1"></i> Sujeito a pagamento e metodologia
+          }
+        </small>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-cc-primary" [disabled]="loading">
+          @if (loading) { <span class="spinner-border spinner-border-sm me-1"></span> Salvando... }
+          @else { <i class="fas fa-save me-1"></i> Salvar }
+        </button>
+        <a routerLink="/admin/cargos" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i> Voltar</a>
+      </div>
+    </form>
+  </div>
+</div>

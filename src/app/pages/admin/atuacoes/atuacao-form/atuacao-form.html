@@ -1,1 +1,40 @@
-<p>atuacao-form works!</p>
+<!-- =============================================
+		 src/app/pages/admin/atuacoes/atuacao-form/atuacao-form.html
+		 ============================================= -->
+<app-page-header [title]="isEdit ? 'Editar Atuação' : 'Nova Atuação'" icon="fas fa-briefcase"></app-page-header>
+
+<div class="card shadow-sm">
+	<div class="card-body">
+		<form (ngSubmit)="salvar()">
+			<div class="mb-3">
+				<label class="form-label">Cluster <span class="text-danger">*</span></label>
+				<select class="form-select" [(ngModel)]="clusterId" name="clusterId" required>
+					<option [ngValue]="null">Selecione...</option>
+					@for (c of clusters; track c.id) {
+						<option [ngValue]="c.id">{{ c.nome }}</option>
+					}
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Nome da Atuação <span class="text-danger">*</span></label>
+				<input type="text" class="form-control" [(ngModel)]="nome" name="nome"
+							 placeholder="Ex: Nutrição Clínica" maxlength="100" required>
+				<small class="text-muted">{{ nome.length }}/100 caracteres</small>
+			</div>
+
+			<div class="d-flex gap-2">
+				<button type="submit" class="btn btn-cc-primary" [disabled]="loading">
+					@if (loading) {
+						<span class="spinner-border spinner-border-sm me-1"></span> Salvando...
+					} @else {
+						<i class="fas fa-save me-1"></i> Salvar
+					}
+				</button>
+				<a routerLink="/admin/atuacoes" class="btn btn-outline-secondary">
+					<i class="fas fa-arrow-left me-1"></i> Voltar
+				</a>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,1 +1,75 @@
-<p>atuacao-list works!</p>
+<!-- =============================================
+		 src/app/pages/admin/atuacoes/atuacao-list/atuacao-list.html
+		 ============================================= -->
+<app-page-header
+	title="Atuações Específicas"
+	subtitle="Profissões vinculadas aos Clusters"
+	icon="fas fa-briefcase"
+	btnLabel="Nova Atuação"
+	btnRoute="/admin/atuacoes/novo">
+</app-page-header>
+
+<div class="card shadow-sm mb-3">
+	<div class="card-body">
+		<label class="form-label fw-bold">Filtrar por Cluster</label>
+		<select class="form-select" [(ngModel)]="selectedClusterId" (ngModelChange)="onClusterChange()">
+			<option [ngValue]="null">Selecione um cluster...</option>
+			@for (c of clusters; track c.id) {
+				<option [ngValue]="c.id">{{ c.nome }}</option>
+			}
+		</select>
+	</div>
+</div>
+
+@if (loading) {
+	<div class="text-center py-4">
+		<div class="spinner-border text-primary"></div>
+	</div>
+} @else if (selectedClusterId && atuacoes.length === 0) {
+	<div class="alert alert-info">
+		<i class="fas fa-info-circle me-1"></i> Nenhuma atuação cadastrada neste cluster.
+	</div>
+} @else if (atuacoes.length > 0) {
+	<div class="card shadow-sm">
+		<div class="table-responsive">
+			<table class="table table-hover mb-0">
+				<thead class="table-light">
+					<tr>
+						<th>ID</th>
+						<th>Nome</th>
+						<th>Cluster</th>
+						<th>Status</th>
+						<th class="text-end">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (a of atuacoes; track a.id) {
+						<tr>
+							<td>{{ a.id }}</td>
+							<td>{{ a.nome }}</td>
+							<td>{{ a.clusterNome }}</td>
+							<td>
+								<span class="badge" [class.bg-success]="a.ativo" [class.bg-secondary]="!a.ativo">
+									{{ a.ativo ? 'Ativo' : 'Inativo' }}
+								</span>
+							</td>
+							<td class="text-end">
+								<a [routerLink]="['/admin/atuacoes/editar', a.id]" class="btn btn-outline-primary btn-sm me-1">
+									<i class="fas fa-edit"></i>
+								</a>
+								<button class="btn btn-outline-danger btn-sm" (click)="confirmarInativar(a)">
+									<i class="fas fa-ban"></i>
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+}
+
+<app-confirm-dialog [visible]="confirmVisible" title="Inativar Atuação"
+	[message]="'Deseja inativar: ' + (selectedItem?.nome || '') + '?'"
+	(confirmed)="inativar()" (cancelled)="cancelar()">
+</app-confirm-dialog>
