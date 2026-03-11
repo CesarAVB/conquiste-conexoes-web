@@ -31,7 +31,7 @@ export class VisitanteService {
     return this.http.post<ApiResponse<Visitante>>(`${this.url}/externo`, data);
   }
 
-  registrarInterno(data: { equipeDestinoId: number; dataVisita: string }): Observable<ApiResponse<Visitante>> {
+  registrarInterno(data: Partial<Visitante>): Observable<ApiResponse<Visitante>> {
     return this.http.post<ApiResponse<Visitante>>(`${this.url}/interno`, data);
   }
 

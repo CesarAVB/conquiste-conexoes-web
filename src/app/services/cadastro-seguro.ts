@@ -35,3 +35,4 @@ export class CadastroSeguroService {
   resolverSolicitacao(associadoId: number, solicitacaoId: number, data: { status: string; responsavelId: number }): Observable<ApiResponse<SolicitacaoAlteracao>> {
     return this.http.patch<ApiResponse<SolicitacaoAlteracao>>(`${this.url(associadoId)}/solicitacoes/${solicitacaoId}/resolver`, data);
   }
+}

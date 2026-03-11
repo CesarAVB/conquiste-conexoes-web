@@ -1,11 +1,11 @@
 // Bootstrap
-@import 'bootstrap/scss/bootstrap';
+@use 'bootstrap/scss/bootstrap';
+
+// Toastr
+@use 'ngx-toastr/toastr';
 
 // Font Awesome
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-
-// Toastr
-@import 'ngx-toastr/toastr';
 
 // ============================================
 // Variáveis customizadas C+C
@@ -46,8 +46,8 @@ body {
   border-color: var(--cc-primary);
   color: #fff;
   &:hover {
-    background-color: darken(#1a3a5c, 10%);
-    border-color: darken(#1a3a5c, 10%);
+    background-color: #0f2338;
+    border-color: #0f2338;
     color: #fff;
   }
 }
@@ -57,8 +57,8 @@ body {
   border-color: var(--cc-secondary);
   color: #fff;
   &:hover {
-    background-color: darken(#2ecc71, 10%);
-    border-color: darken(#2ecc71, 10%);
+    background-color: #25a35a;
+    border-color: #25a35a;
     color: #fff;
   }
 }

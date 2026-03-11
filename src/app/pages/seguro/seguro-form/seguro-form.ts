@@ -121,11 +121,11 @@ export class SeguroFormComponent implements OnInit {
     this.salvando = true;
     const payload = {
       ...this.form,
-      beneficiarios: this.beneficiarios,
+      beneficiarios: this.beneficiarios as Beneficiario[],
       contatoEmergencia: this.contatoEmergencia,
       lgpdDataAceite: new Date().toISOString(),
     };
-    this.seguroService.criar(this.associadoId, payload).subscribe({
+    this.seguroService.criar(this.associadoId, payload as unknown as Partial<CadastroSeguro>).subscribe({
       next: (res) => {
         this.toastr.success(res.message || 'Seguro cadastrado com sucesso!');
         this.salvando = false;

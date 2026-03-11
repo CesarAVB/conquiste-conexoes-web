@@ -5,8 +5,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideSpinnerConfig } from 'ngx-spinner';
 import { routes } from './app.routes';
-import { authInterceptor } from './interceptors/auth.interceptor';
-import { loadingInterceptor } from './interceptors/loading.interceptor';
+import { authInterceptor } from './interceptors/auth-interceptor';
+import { loadingInterceptor } from './interceptors/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

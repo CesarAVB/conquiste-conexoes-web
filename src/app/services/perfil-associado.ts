@@ -33,3 +33,4 @@ export class PerfilAssociadoService {
     form.append('logomarca', arquivo);
     return this.http.post<ApiResponse<{ url: string }>>(`${this.url(associadoId)}/logomarca`, form);
   }
+}

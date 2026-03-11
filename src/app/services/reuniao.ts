@@ -21,6 +21,7 @@ export interface Reuniao {
 
 export interface ReuniaoFiltro {
   status?: string;
+  mes?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -31,6 +32,7 @@ export class ReuniaoService {
   listar(filtro?: ReuniaoFiltro): Observable<ApiResponse<Reuniao[]>> {
     let params = new HttpParams();
     if (filtro?.status) params = params.set('status', filtro.status);
+    if (filtro?.mes) params = params.set('mes', filtro.mes);
     return this.http.get<ApiResponse<Reuniao[]>>(this.url, { params });
   }
 
