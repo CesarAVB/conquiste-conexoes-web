@@ -1,7 +1,7 @@
 .main-content {
   margin-top: var(--cc-header-height);
   margin-left: var(--cc-sidebar-width);
-  padding: 1.5rem;
+  padding: 0;
   height: calc(100vh - var(--cc-header-height));
   overflow-y: auto;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -17,6 +17,7 @@
 .page-content {
   flex: 1;
   min-height: 0;
+  padding: 1.5rem;
 }
 
 @media (max-width: 768px) {
