@@ -1,1 +1,80 @@
-/* You can add global styles to this file, and also import other style files */
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Font Awesome
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+// Toastr
+@import 'ngx-toastr/toastr';
+
+// ============================================
+// Variáveis customizadas C+C
+// ============================================
+:root {
+  --cc-primary: #1a3a5c;
+  --cc-secondary: #2ecc71;
+  --cc-accent: #f39c12;
+  --cc-dark: #2c3e50;
+  --cc-light: #ecf0f1;
+  --cc-danger: #e74c3c;
+  --cc-bg: #f5f7fa;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--cc-bg);
+  margin: 0;
+}
+
+// ============================================
+// Utilitários
+// ============================================
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-cc-primary {
+  color: var(--cc-primary) !important;
+}
+
+.bg-cc-primary {
+  background-color: var(--cc-primary) !important;
+}
+
+.btn-cc-primary {
+  background-color: var(--cc-primary);
+  border-color: var(--cc-primary);
+  color: #fff;
+  &:hover {
+    background-color: darken(#1a3a5c, 10%);
+    border-color: darken(#1a3a5c, 10%);
+    color: #fff;
+  }
+}
+
+.btn-cc-secondary {
+  background-color: var(--cc-secondary);
+  border-color: var(--cc-secondary);
+  color: #fff;
+  &:hover {
+    background-color: darken(#2ecc71, 10%);
+    border-color: darken(#2ecc71, 10%);
+    color: #fff;
+  }
+}
+
+// ============================================
+// Layout
+// ============================================
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
