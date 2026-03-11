@@ -1,5 +1,5 @@
 <!-- src/app/components/layout/main-layout/main-layout.component.html -->
-<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<app-header (toggleSidebar)="toggleSidebar()" [sidebarOpen]="sidebarOpen"></app-header>
 <app-sidebar [isOpen]="sidebarOpen"></app-sidebar>
 
 <div class="main-content" [class.sidebar-closed]="!sidebarOpen">
@@ -7,7 +7,9 @@
     <p class="text-cc-primary mt-2">Carregando...</p>
   </ngx-spinner>
 
-  <router-outlet></router-outlet>
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
 
   <app-footer></app-footer>
 </div>

@@ -1,23 +1,23 @@
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-  <div>
-    <h4 class="fw-bold text-cc-primary mb-0">
-      @if (icon) {
-        <i [class]="icon + ' me-2'"></i>
-      }
-      {{ title }}
-    </h4>
+<div class="page-header">
+  @if (icon) {
+    <div class="page-header__icon">
+      <i [class]="icon"></i>
+    </div>
+  }
+  <div class="page-header__text">
+    <h4 class="page-header__title">{{ title }}</h4>
     @if (subtitle) {
-      <small class="text-muted">{{ subtitle }}</small>
+      <p class="page-header__subtitle">{{ subtitle }}</p>
     }
   </div>
-  <div>
-    @if (btnLabel && btnRoute) {
-      <a [routerLink]="btnRoute" class="btn btn-cc-primary btn-sm">
+  @if (btnLabel && btnRoute) {
+    <div class="page-header__actions">
+      <a [routerLink]="btnRoute" class="btn btn-primary btn-sm">
         @if (btnIcon) {
           <i [class]="btnIcon + ' me-1'"></i>
         }
         {{ btnLabel }}
       </a>
-    }
-  </div>
+    </div>
+  }
 </div>

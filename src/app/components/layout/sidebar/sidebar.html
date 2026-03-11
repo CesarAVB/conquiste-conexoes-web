@@ -1,34 +1,44 @@
-<!-- src/app/components/layout/sidebar/sidebar.component.html -->
-<aside class="sidebar" [class.open]="isOpen">
-  <nav class="mt-2">
+<aside class="sidebar" [class.sidebar--open]="isOpen">
+
+  <!-- Brand -->
+  <div class="sidebar__brand">
+    <div class="sidebar__logo">
+      <i class="fas fa-handshake"></i>
+    </div>
+    <div class="sidebar__brand-text">
+      <span class="sidebar__brand-name">C+C</span>
+      <span class="sidebar__brand-sub">Conquiste Conexões</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="sidebar__nav">
     @for (item of menuItems; track item.label) {
-      <!-- Item com filhos (submenu) -->
       @if (item.children) {
-        <div class="nav-section">
-          <a class="nav-link" (click)="toggleSubmenu(item)">
-            <i [class]="item.icon + ' me-2'"></i>
-            <span>{{ item.label }}</span>
-            <i class="fas fa-chevron-down ms-auto transition-icon"
-               [class.rotated]="item.expanded"></i>
-          </a>
+        <div class="sidebar__group">
+          <button class="sidebar__item sidebar__item--parent" (click)="toggleSubmenu(item)">
+            <span class="sidebar__item-icon"><i [class]="item.icon"></i></span>
+            <span class="sidebar__item-label">{{ item.label }}</span>
+            <i class="fas fa-chevron-right sidebar__chevron" [class.sidebar__chevron--open]="item.expanded"></i>
+          </button>
           @if (item.expanded) {
-            <div class="submenu">
+            <div class="sidebar__submenu">
               @for (child of item.children; track child.label) {
-                <a class="nav-link sub-item" [routerLink]="child.route" routerLinkActive="active">
-                  <i [class]="child.icon + ' me-2'"></i>
-                  <span>{{ child.label }}</span>
+                <a class="sidebar__item sidebar__item--child" [routerLink]="child.route" routerLinkActive="sidebar__item--active">
+                  <span class="sidebar__item-icon"><i [class]="child.icon"></i></span>
+                  <span class="sidebar__item-label">{{ child.label }}</span>
                 </a>
               }
             </div>
           }
         </div>
       } @else {
-        <!-- Item simples -->
-        <a class="nav-link" [routerLink]="item.route" routerLinkActive="active">
-          <i [class]="item.icon + ' me-2'"></i>
-          <span>{{ item.label }}</span>
+        <a class="sidebar__item" [routerLink]="item.route" routerLinkActive="sidebar__item--active" [routerLinkActiveOptions]="{exact: true}">
+          <span class="sidebar__item-icon"><i [class]="item.icon"></i></span>
+          <span class="sidebar__item-label">{{ item.label }}</span>
         </a>
       }
     }
   </nav>
+
 </aside>

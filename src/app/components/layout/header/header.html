@@ -1,25 +1,20 @@
-<!-- src/app/components/layout/header/header.component.html -->
-<nav class="navbar navbar-expand-lg bg-cc-primary navbar-dark fixed-top shadow-sm px-3">
-  <button class="btn btn-link text-white me-2 d-lg-none" (click)="onToggleSidebar()">
-    <i class="fas fa-bars fa-lg"></i>
+<header class="app-header" [class.sidebar-closed]="!sidebarOpen">
+  <button class="app-header__toggle" (click)="onToggleSidebar()" aria-label="Alternar menu">
+    <i class="fas fa-bars"></i>
   </button>
 
-  <a class="navbar-brand fw-bold" routerLink="/dashboard">
-    <i class="fas fa-handshake me-2"></i>C+C
-  </a>
+  <div class="app-header__spacer"></div>
 
-  <div class="ms-auto d-flex align-items-center">
-    <span class="text-white me-3 d-none d-md-inline">
-      <i class="fas fa-user-circle me-1"></i>
-      {{ authService.getUser()?.nome }}
-    </span>
-
-    <span class="badge bg-light text-cc-primary me-3 d-none d-md-inline">
-      {{ authService.getUser()?.role }}
-    </span>
-
-    <button class="btn btn-outline-light btn-sm" (click)="logout()">
-      <i class="fas fa-sign-out-alt me-1"></i> Sair
+  <div class="app-header__user">
+    <div class="app-header__avatar" [title]="authService.getUser()?.nome ?? ''">
+      {{ getInitials() }}
+    </div>
+    <div class="app-header__user-info">
+      <span class="app-header__user-name">{{ authService.getUser()?.nome }}</span>
+      <span class="app-header__user-role">{{ authService.getUser()?.role }}</span>
+    </div>
+    <button class="app-header__logout" (click)="logout()" title="Sair">
+      <i class="fas fa-sign-out-alt"></i>
     </button>
   </div>
-</nav>
+</header>
