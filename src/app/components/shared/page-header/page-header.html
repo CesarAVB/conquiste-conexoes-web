@@ -1,1 +1,23 @@
-<p>page-header works!</p>
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <div>
+    <h4 class="fw-bold text-cc-primary mb-0">
+      @if (icon) {
+        <i [class]="icon + ' me-2'"></i>
+      }
+      {{ title }}
+    </h4>
+    @if (subtitle) {
+      <small class="text-muted">{{ subtitle }}</small>
+    }
+  </div>
+  <div>
+    @if (btnLabel && btnRoute) {
+      <a [routerLink]="btnRoute" class="btn btn-cc-primary btn-sm">
+        @if (btnIcon) {
+          <i [class]="btnIcon + ' me-1'"></i>
+        }
+        {{ btnLabel }}
+      </a>
+    }
+  </div>
+</div>
