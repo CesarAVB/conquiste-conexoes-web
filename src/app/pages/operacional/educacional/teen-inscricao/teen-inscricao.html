@@ -1,0 +1,26 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading && evento) {
+  <app-page-header title="Inscrição" [subtitle]="evento.titulo" icon="fas fa-user-plus" />
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5><i class="fas fa-calendar me-2 text-primary"></i>{{ evento.titulo }}</h5>
+      @if (evento.descricao) { <p class="text-muted">{{ evento.descricao }}</p> }
+      <ul class="list-unstyled">
+        <li><i class="fas fa-clock me-2 text-secondary"></i>{{ evento.dataEvento | date:'dd/MM/yyyy HH:mm' }}</li>
+        @if (evento.local) { <li><i class="fas fa-map-marker-alt me-2 text-secondary"></i>{{ evento.local }}</li> }
+      </ul>
+      <hr />
+      <p>Confirme sua inscrição no evento acima.</p>
+      <div class="d-flex gap-2">
+        <button class="btn btn-success" (click)="inscrever()" [disabled]="salvando || evento.inscrito">
+          @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+          @if (evento.inscrito) { <i class="fas fa-check me-1"></i>Já inscrito }
+          @else { <i class="fas fa-user-plus me-1"></i>Confirmar Inscrição }
+        </button>
+        <a class="btn btn-outline-secondary" routerLink="/educacional/teen">Voltar</a>
+      </div>
+    </div>
+  </div>
+}

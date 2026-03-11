@@ -1,1 +1,179 @@
-<p>perfil-form works!</p>
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (!loading) {
+  <app-page-header
+    title="Meu Perfil C+C"
+    subtitle="Fase 3 — Complete seu cartão profissional"
+    icon="fas fa-id-card"
+  />
+
+  <!-- Dados Automáticos (somente leitura) -->
+  @if (clusterNome) {
+    <div class="card shadow-sm mb-4 border-info">
+      <div class="card-header bg-info text-dark"><i class="fas fa-info-circle me-2"></i>Dados da Fase 1 (somente leitura)</div>
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-2"><span class="text-muted d-block small">Cluster</span>{{ clusterNome }}</div>
+          <div class="col-md-3"><span class="text-muted d-block small">Atuação</span>{{ atuacaoNome }}</div>
+          <div class="col-md-2"><span class="text-muted d-block small">Equipe</span>{{ equipeNome }}</div>
+          <div class="col-md-2"><span class="text-muted d-block small">Status</span>{{ status }}</div>
+          <div class="col-md-1"><span class="text-muted d-block small">Ingresso</span>{{ dataIngresso | date:'dd/MM/yyyy' }}</div>
+          <div class="col-md-2"><span class="text-muted d-block small">Vencimento</span>{{ vencimento | date:'dd/MM/yyyy' }}</div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Fotos -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-camera me-2 text-primary"></i>Imagens</div>
+    <div class="card-body">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label class="form-label">Foto Profissional</label>
+          <div class="d-flex align-items-center gap-3">
+            @if (fotoPreview) {
+              <img [src]="fotoPreview" alt="Foto" class="rounded-circle border" style="width:80px;height:80px;object-fit:cover" />
+            } @else {
+              <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width:80px;height:80px">
+                <i class="fas fa-user text-white fa-2x"></i>
+              </div>
+            }
+            <input type="file" class="form-control" accept="image/*" (change)="onFotoChange($event)" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Logomarca da Empresa</label>
+          <div class="d-flex align-items-center gap-3">
+            @if (logoPreview) {
+              <img [src]="logoPreview" alt="Logomarca" class="border rounded" style="width:80px;height:80px;object-fit:contain" />
+            } @else {
+              <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width:80px;height:80px">
+                <i class="fas fa-building text-muted fa-2x"></i>
+              </div>
+            }
+            <input type="file" class="form-control" accept="image/*" (change)="onLogoChange($event)" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dados Profissionais -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-briefcase me-2 text-primary"></i>Dados Profissionais</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome Profissional <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.nomeProfissional" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Nome da Empresa</label>
+          <input type="text" class="form-control" [(ngModel)]="form.nomeEmpresa" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Telefone Principal</label>
+          <input type="text" class="form-control" [(ngModel)]="form.telefonePrincipal" maxlength="15" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Telefone Secundário</label>
+          <input type="text" class="form-control" [(ngModel)]="form.telefoneSecundario" maxlength="15" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">E-mail Principal</label>
+          <input type="email" class="form-control" [(ngModel)]="form.emailPrincipal" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Site</label>
+          <input type="url" class="form-control" [(ngModel)]="form.site" placeholder="https://" />
+        </div>
+        <div class="col-md-6">
+          <div class="form-check form-switch mt-4">
+            <input class="form-check-input" type="checkbox" id="exibirEndereco" [(ngModel)]="form.exibirEnderecoComercial" />
+            <label class="form-check-label" for="exibirEndereco">Exibir endereço comercial no perfil público</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Redes Sociais -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-share-alt me-2 text-primary"></i>Redes Sociais</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label"><i class="fab fa-linkedin me-1 text-primary"></i>LinkedIn</label>
+          <input type="url" class="form-control" [(ngModel)]="form.linkedin" placeholder="https://linkedin.com/in/..." />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label"><i class="fab fa-instagram me-1 text-danger"></i>Instagram</label>
+          <input type="url" class="form-control" [(ngModel)]="form.instagram" placeholder="https://instagram.com/..." />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label"><i class="fab fa-youtube me-1 text-danger"></i>YouTube</label>
+          <input type="url" class="form-control" [(ngModel)]="form.youtube" placeholder="https://youtube.com/..." />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Outra Rede Social</label>
+          <input type="url" class="form-control" [(ngModel)]="form.outraRedeSocial" placeholder="https://..." />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Perfil Profissional (textos com contador) -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-pen me-2 text-primary"></i>Perfil Profissional</div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label d-flex justify-content-between">
+          <span>O que eu faço <span class="text-danger">*</span></span>
+          <small [class.text-danger]="contador('oQueEuFaco') > limites.oQueEuFaco" class="text-muted">{{ contador('oQueEuFaco') }}/{{ limites.oQueEuFaco }}</small>
+        </label>
+        <textarea class="form-control" rows="3" [(ngModel)]="form.oQueEuFaco" [maxlength]="limites.oQueEuFaco"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label d-flex justify-content-between">
+          <span>Público Ideal <span class="text-danger">*</span></span>
+          <small [class.text-danger]="contador('publicoIdeal') > limites.publicoIdeal" class="text-muted">{{ contador('publicoIdeal') }}/{{ limites.publicoIdeal }}</small>
+        </label>
+        <textarea class="form-control" rows="3" [(ngModel)]="form.publicoIdeal" [maxlength]="limites.publicoIdeal"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label d-flex justify-content-between">
+          <span>Principal Problema que Resolvo <span class="text-danger">*</span></span>
+          <small [class.text-danger]="contador('principalProblemaQueResolvo') > limites.principalProblemaQueResolvo" class="text-muted">{{ contador('principalProblemaQueResolvo') }}/{{ limites.principalProblemaQueResolvo }}</small>
+        </label>
+        <textarea class="form-control" rows="3" [(ngModel)]="form.principalProblemaQueResolvo" [maxlength]="limites.principalProblemaQueResolvo"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label d-flex justify-content-between">
+          <span>Conexões Estratégicas que Busco</span>
+          <small [class.text-danger]="contador('conexoesEstrategicas') > limites.conexoesEstrategicas" class="text-muted">{{ contador('conexoesEstrategicas') }}/{{ limites.conexoesEstrategicas }}</small>
+        </label>
+        <textarea class="form-control" rows="3" [(ngModel)]="form.conexoesEstrategicas" [maxlength]="limites.conexoesEstrategicas"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label d-flex justify-content-between">
+          <span>Interesses Pessoais</span>
+          <small [class.text-danger]="contador('interessesPessoais') > limites.interessesPessoais" class="text-muted">{{ contador('interessesPessoais') }}/{{ limites.interessesPessoais }}</small>
+        </label>
+        <textarea class="form-control" rows="2" [(ngModel)]="form.interessesPessoais" [maxlength]="limites.interessesPessoais"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 mb-4">
+    <button class="btn btn-primary btn-lg" (click)="salvar()" [disabled]="salvando">
+      @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+      <i class="fas fa-save me-1"></i>Salvar Perfil
+    </button>
+    <a class="btn btn-outline-secondary btn-lg" [routerLink]="['/associados', associadoId]">
+      Cancelar
+    </a>
+  </div>
+}

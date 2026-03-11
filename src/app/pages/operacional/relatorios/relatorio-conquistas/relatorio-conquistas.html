@@ -1,0 +1,54 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Relatório de Conquistas" subtitle="Indicadores de negócios por período" icon="fas fa-trophy" />
+
+  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap">
+    <div class="btn-group" role="group">
+      @for (p of ['1M','3M','TOTAL']; track p) {
+        <button type="button" class="btn btn-sm" [class.btn-primary]="periodo === p" [class.btn-outline-primary]="periodo !== p" (click)="setPeriodo($any(p))">
+          @if (p === '1M') { 1 Mês } @if (p === '3M') { 3 Meses } @if (p === 'TOTAL') { Total }
+        </button>
+      }
+    </div>
+    <button class="btn btn-sm btn-outline-secondary ms-auto d-print-none" (click)="imprimir()">
+      <i class="fas fa-print me-1"></i>Imprimir
+    </button>
+  </div>
+
+  @if (dados.length === 0) {
+    <div class="alert alert-info">Nenhum dado disponível.</div>
+  } @else {
+    <div class="table-responsive mb-3">
+      <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+          <tr><th>Membro</th><th class="text-center">Conexões</th><th class="text-center">NG</th><th class="text-center">Parcerias</th><th class="text-center">NR</th><th class="text-center">Visitantes</th><th class="text-center">Pontos</th></tr>
+        </thead>
+        <tbody>
+          @for (d of dados; track d.periodo) {
+            <tr>
+              <td>{{ d.periodo }}</td>
+              <td class="text-center">{{ d.conexoes }}</td>
+              <td class="text-center">{{ d.ng }}</td>
+              <td class="text-center">{{ d.parcerias }}</td>
+              <td class="text-center">{{ d.nr }}</td>
+              <td class="text-center">{{ d.visitantes }}</td>
+              <td class="text-center fw-bold">{{ d.pontos }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot class="table-secondary fw-bold">
+          <tr>
+            <td>TOTAL</td>
+            <td class="text-center">{{ totais.conexoes }}</td>
+            <td class="text-center">{{ totais.ng }}</td>
+            <td class="text-center">{{ totais.parcerias }}</td>
+            <td class="text-center">{{ totais.nr }}</td>
+            <td class="text-center">{{ totais.visitantes }}</td>
+            <td class="text-center">{{ totais.pontos }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  }
+}

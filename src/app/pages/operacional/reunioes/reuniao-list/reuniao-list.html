@@ -1,0 +1,42 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Reuniões C+C" subtitle="Minhas reuniões" icon="fas fa-handshake"
+    btnLabel="Agendar Reunião" btnRoute="/reunioes/agendar" btnIcon="fas fa-plus" />
+
+  <div class="d-flex gap-2 mb-3 flex-wrap">
+    <select class="form-select form-select-sm w-auto" [(ngModel)]="filtroStatus" (change)="carregar()">
+      <option value="">Todos</option>
+      <option value="PENDENTE">Pendentes</option>
+      <option value="REALIZADA">Realizadas</option>
+      <option value="ADIADA">Adiadas</option>
+      <option value="CANCELADA">Canceladas</option>
+    </select>
+  </div>
+
+  @if (reunioes.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhuma reunião encontrada.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light"><tr><th>Associado</th><th class="d-none d-md-table-cell">Data/Hora</th><th class="d-none d-md-table-cell">Tipo</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          @for (r of reunioes; track r.id) {
+            <tr>
+              <td>{{ r.associado2Nome }}</td>
+              <td class="d-none d-md-table-cell">{{ r.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="d-none d-md-table-cell"><span class="badge bg-secondary">{{ r.tipo }}</span></td>
+              <td><span class="badge" [class]="statusClass[r.status]">{{ statusLabel[r.status] }}</span></td>
+              <td>
+                <a [routerLink]="['/reunioes', r.id]" class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye"></i></a>
+                @if (r.status === 'PENDENTE') {
+                  <a [routerLink]="['/reunioes/validar', r.id]" class="btn btn-sm btn-outline-success ms-1"><i class="fas fa-check"></i></a>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

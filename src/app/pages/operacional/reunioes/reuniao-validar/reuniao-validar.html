@@ -1,0 +1,44 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading && reuniao) {
+  <app-page-header title="Validar Reunião C+C" subtitle="Registre os resultados" icon="fas fa-check-square" />
+  <div class="card shadow-sm">
+    <div class="card-header"><i class="fas fa-info me-2"></i>Reunião com {{ reuniao.associado2Nome }} &mdash; {{ reuniao.dataHora | date:'dd/MM/yyyy HH:mm' }}</div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Número de Prospects (0 a 3)</label>
+        <div class="d-flex gap-2">
+          @for (n of [0,1,2,3]; track n) {
+            <button type="button" class="btn" [class.btn-primary]="form.prospects === n" [class.btn-outline-primary]="form.prospects !== n" (click)="form.prospects = n">{{ n }}</button>
+          }
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="nenhuma" [(ngModel)]="form.nenhuma" />
+          <label class="form-check-label" for="nenhuma">Nenhuma possibilidade de negócio</label>
+        </div>
+      </div>
+      @if (!form.nenhuma) {
+        <div class="mb-3">
+          <label class="form-label">Tangibilidades <span class="text-danger">*</span></label>
+          <div class="d-flex flex-wrap gap-2">
+            @for (t of tangibilidadesOpcoes; track t) {
+              <button type="button" class="btn btn-sm"
+                [class.btn-success]="form.tangibilidades.includes(t)"
+                [class.btn-outline-secondary]="!form.tangibilidades.includes(t)"
+                (click)="toggleTangibilidade(t)">{{ t }}</button>
+            }
+          </div>
+        </div>
+      }
+      <div class="d-flex gap-2">
+        <button class="btn btn-success" (click)="validar()" [disabled]="salvando">
+          @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+          <i class="fas fa-check me-1"></i>Validar Reunião (+5 pts)
+        </button>
+        <a class="btn btn-outline-secondary" routerLink="/reunioes">Cancelar</a>
+      </div>
+    </div>
+  </div>
+}

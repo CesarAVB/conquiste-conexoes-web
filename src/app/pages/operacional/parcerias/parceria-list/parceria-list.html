@@ -1,0 +1,25 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Parcerias" subtitle="Histórico de parcerias registradas" icon="fas fa-handshake"
+    btnLabel="Nova Parceria" btnRoute="/parcerias/nova" btnIcon="fas fa-plus" />
+
+  @if (parcerias.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhuma parceria registrada ainda.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light"><tr><th>Associado 1</th><th>Associado 2</th><th>Data</th></tr></thead>
+        <tbody>
+          @for (p of parcerias; track p.id) {
+            <tr>
+              <td>{{ p.associado1Nome }}</td>
+              <td>{{ p.associado2Nome }}</td>
+              <td>{{ p.dataParceria | date:'dd/MM/yyyy' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

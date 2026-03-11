@@ -1,0 +1,55 @@
+﻿<app-page-header title="Substituto" subtitle="Registre um substituto para reunião" icon="fas fa-user-check" />
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="mb-3">
+      <label class="form-label">Nome do Substituído</label>
+      <input type="text" class="form-control" [(ngModel)]="form.nomeSubstituido" placeholder="Nome do associado ausente" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Tipo de Substituto</label>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn" [class.btn-primary]="tipoSubstituto === 'ASSOCIADO'" [class.btn-outline-secondary]="tipoSubstituto !== 'ASSOCIADO'" (click)="tipoSubstituto = 'ASSOCIADO'; resultados = []">Associado do C+C</button>
+        <button type="button" class="btn" [class.btn-secondary]="tipoSubstituto === 'EXTERNO'" [class.btn-outline-secondary]="tipoSubstituto !== 'EXTERNO'" (click)="tipoSubstituto = 'EXTERNO'">Externo</button>
+      </div>
+    </div>
+
+    @if (tipoSubstituto === 'ASSOCIADO') {
+      <div class="mb-3 position-relative">
+        <label class="form-label">Associado Substituto <span class="text-danger">*</span></label>
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="buscaTexto" placeholder="Buscar por nome ou CPF..." />
+          <button class="btn btn-outline-secondary" type="button" (click)="buscar()" [disabled]="buscando">
+            <i class="fas" [class.fa-search]="!buscando" [class.fa-spinner]="buscando" [class.fa-spin]="buscando"></i>
+          </button>
+        </div>
+        @if (resultados.length > 0) {
+          <div class="list-group position-absolute w-100 shadow" style="z-index:1000">
+            @for (a of resultados; track a.id) {
+              <button type="button" class="list-group-item list-group-item-action" (click)="selecionar(a)">{{ a.nomeCompleto }} &mdash; {{ a.cpf }}</button>
+            }
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome Completo <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.nomeCompleto" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">CPF</label>
+          <input type="text" class="form-control" [(ngModel)]="form.cpf" maxlength="14" />
+        </div>
+      </div>
+    }
+
+    <div class="mt-3 d-flex gap-2">
+      <button class="btn btn-primary" (click)="salvar()" [disabled]="salvando">
+        @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+        <i class="fas fa-save me-1"></i>Registrar Substituto
+      </button>
+      <a class="btn btn-outline-secondary" routerLink="/visitantes/validacao">Cancelar</a>
+    </div>
+  </div>
+</div>

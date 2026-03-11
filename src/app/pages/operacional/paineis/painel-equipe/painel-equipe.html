@@ -1,0 +1,37 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Performance da Equipe" subtitle="Desempenho coletivo dos membros" icon="fas fa-users" />
+
+  <div class="btn-group mb-3" role="group">
+    @for (p of ['1M','3M','TOTAL']; track p) {
+      <button type="button" class="btn" [class.btn-primary]="periodo === p" [class.btn-outline-primary]="periodo !== p" (click)="setPeriodo($any(p))">
+        @if (p === '1M') { 1 Mês }
+        @if (p === '3M') { 3 Meses }
+        @if (p === 'TOTAL') { Total }
+      </button>
+    }
+  </div>
+
+  @if (dados.length === 0) {
+    <div class="alert alert-info">Nenhum dado para o período selecionado.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light"><tr><th>Membro</th><th class="text-center">Reuniões</th><th class="text-center">Conexões</th><th class="text-center">Parcerias</th><th class="text-center">Visitantes</th><th class="text-center">Pontos</th></tr></thead>
+        <tbody>
+          @for (d of dados; track d.periodo) {
+            <tr>
+              <td>{{ d.periodo }}</td>
+              <td class="text-center">{{ d.reunioes }}</td>
+              <td class="text-center">{{ d.conexoes }}</td>
+              <td class="text-center">{{ d.parcerias }}</td>
+              <td class="text-center">{{ d.visitantes }}</td>
+              <td class="text-center fw-bold">{{ d.pontos }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

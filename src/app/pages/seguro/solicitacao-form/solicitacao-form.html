@@ -1,1 +1,77 @@
-<p>solicitacao-form works!</p>
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (!loading) {
+  @if (!modoAdmin) {
+    <!-- Associado: nova solicitação -->
+    <app-page-header
+      title="Solicitar Alteração de Beneficiário"
+      subtitle="Envie sua justificativa para análise"
+      icon="fas fa-file-alt"
+    />
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label">Justificativa <span class="text-danger">*</span></label>
+          <textarea class="form-control" rows="5" [(ngModel)]="justificativa"
+            placeholder="Descreva o motivo da solicitação de alteração de beneficiário..."></textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" (click)="enviar()" [disabled]="salvando || !justificativa.trim()">
+            @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+            <i class="fas fa-paper-plane me-1"></i>Enviar Solicitação
+          </button>
+          <a class="btn btn-outline-secondary" [routerLink]="['/associados', associadoId, 'seguro', 'view']">Cancelar</a>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <!-- Admin: resolver solicitação -->
+    <app-page-header
+      title="Resolver Solicitação"
+      subtitle="Aprove ou rejeite a solicitação de alteração"
+      icon="fas fa-gavel"
+    />
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label">Decisão <span class="text-danger">*</span></label>
+          <div class="d-flex gap-2">
+            <button class="btn" [class.btn-success]="resolucaoStatus === 'APROVADO'" [class.btn-outline-success]="resolucaoStatus !== 'APROVADO'" (click)="resolucaoStatus = 'APROVADO'">
+              <i class="fas fa-check me-1"></i>Aprovar
+            </button>
+            <button class="btn" [class.btn-danger]="resolucaoStatus === 'REJEITADO'" [class.btn-outline-danger]="resolucaoStatus !== 'REJEITADO'" (click)="resolucaoStatus = 'REJEITADO'">
+              <i class="fas fa-times me-1"></i>Rejeitar
+            </button>
+          </div>
+        </div>
+        <div class="mb-3 position-relative">
+          <label class="form-label">Responsável <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="buscaResponsavel" placeholder="Buscar por nome ou CPF..." />
+            <button class="btn btn-outline-secondary" type="button" (click)="buscarResponsavel()" [disabled]="buscando">
+              <i class="fas" [class.fa-search]="!buscando" [class.fa-spinner]="buscando" [class.fa-spin]="buscando"></i>
+            </button>
+          </div>
+          @if (responsaveisResultado.length > 0) {
+            <div class="list-group position-absolute w-100 shadow" style="z-index:1000">
+              @for (a of responsaveisResultado; track a.id) {
+                <button type="button" class="list-group-item list-group-item-action" (click)="selecionarResponsavel(a)">
+                  {{ a.nomeCompleto }} &mdash; {{ a.cpf }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" (click)="resolver()" [disabled]="salvando || !resolucaoStatus || !responsavelId">
+            @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+            <i class="fas fa-gavel me-1"></i>Confirmar Resolução
+          </button>
+          <a class="btn btn-outline-secondary" [routerLink]="['/associados', associadoId, 'seguro', 'solicitacoes']">Cancelar</a>
+        </div>
+      </div>
+    </div>
+  }
+}

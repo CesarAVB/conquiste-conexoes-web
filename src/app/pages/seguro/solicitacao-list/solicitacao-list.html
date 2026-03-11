@@ -1,1 +1,60 @@
-<p>solicitacao-list works!</p>
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (!loading) {
+  <app-page-header
+    title="Solicitações de Alteração de Beneficiário"
+    subtitle="Histórico de solicitações"
+    icon="fas fa-file-alt"
+  />
+
+  <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+    <select class="form-select form-select-sm w-auto" [(ngModel)]="filtroStatus">
+      <option value="">Todos os status</option>
+      <option value="SOLICITADO">Solicitado</option>
+      <option value="EM_ANALISE">Em Análise</option>
+      <option value="APROVADO">Aprovado</option>
+      <option value="REJEITADO">Rejeitado</option>
+    </select>
+    <button class="btn btn-sm btn-outline-primary ms-auto" (click)="nova()">
+      <i class="fas fa-plus me-1"></i>Nova Solicitação
+    </button>
+    <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/associados', associadoId, 'seguro', 'view']">
+      <i class="fas fa-arrow-left me-1"></i>Voltar
+    </a>
+  </div>
+
+  @if (listagem.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhuma solicitação encontrada.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Protocolo</th>
+            <th>Status</th>
+            <th class="d-none d-md-table-cell">Data Solicitação</th>
+            <th class="d-none d-md-table-cell">Data Resolução</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of listagem; track s.id) {
+            <tr>
+              <td><code>{{ s.protocolo }}</code></td>
+              <td><span class="badge" [class]="statusClasses[s.status]">{{ statusLabels[s.status] }}</span></td>
+              <td class="d-none d-md-table-cell">{{ s.dataSolicitacao | date:'dd/MM/yyyy' }}</td>
+              <td class="d-none d-md-table-cell">{{ s.dataResolucao ? (s.dataResolucao | date:'dd/MM/yyyy') : '—' }}</td>
+              <td>
+                @if (s.status === 'SOLICITADO' || s.status === 'EM_ANALISE') {
+                  <button class="btn btn-sm btn-outline-primary" (click)="resolver(s)">Resolver</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth-guard';
 import { MainLayoutComponent } from './components/layout/main-layout/main-layout';
 
 export const routes: Routes = [
@@ -132,6 +132,18 @@ export const routes: Routes = [
         path: 'associados/:id/seguro/view',
         loadComponent: () => import('./pages/seguro/seguro-view/seguro-view').then(m => m.SeguroViewComponent)
       },
+      {
+        path: 'associados/:id/seguro/solicitacoes',
+        loadComponent: () => import('./pages/seguro/solicitacao-list/solicitacao-list').then(m => m.SolicitacaoListComponent)
+      },
+      {
+        path: 'associados/:id/seguro/solicitacao',
+        loadComponent: () => import('./pages/seguro/solicitacao-form/solicitacao-form').then(m => m.SolicitacaoFormComponent)
+      },
+      {
+        path: 'associados/:id/seguro/solicitacao/:solId',
+        loadComponent: () => import('./pages/seguro/solicitacao-form/solicitacao-form').then(m => m.SolicitacaoFormComponent)
+      },
       // PERFIL
       {
         path: 'associados/:id/perfil',
@@ -140,6 +152,97 @@ export const routes: Routes = [
       {
         path: 'associados/:id/perfil/view',
         loadComponent: () => import('./pages/perfil/perfil-view/perfil-view').then(m => m.PerfilViewComponent)
+      },
+      // F6A - REUNIÕES
+      {
+        path: 'reunioes',
+        loadComponent: () => import('./pages/operacional/reunioes/reuniao-list/reuniao-list').then(m => m.ReuniaoListComponent)
+      },
+      {
+        path: 'reunioes/agendar',
+        loadComponent: () => import('./pages/operacional/reunioes/reuniao-agendar/reuniao-agendar').then(m => m.ReuniaoAgendarComponent)
+      },
+      {
+        path: 'reunioes/validar/:id',
+        loadComponent: () => import('./pages/operacional/reunioes/reuniao-validar/reuniao-validar').then(m => m.ReuniaoValidarComponent)
+      },
+      {
+        path: 'reunioes/:id',
+        loadComponent: () => import('./pages/operacional/reunioes/reuniao-detalhe/reuniao-detalhe').then(m => m.ReuniaoDetalheComponent)
+      },
+      // F6B - CONEXÕES
+      {
+        path: 'conexoes',
+        loadComponent: () => import('./pages/operacional/conexoes/conexao-geradas/conexao-geradas').then(m => m.ConexaoGeradasComponent)
+      },
+      {
+        path: 'conexoes/nova',
+        loadComponent: () => import('./pages/operacional/conexoes/conexao-nova/conexao-nova').then(m => m.ConexaoNovaComponent)
+      },
+      {
+        path: 'conexoes/recebidas',
+        loadComponent: () => import('./pages/operacional/conexoes/conexao-recebidas/conexao-recebidas').then(m => m.ConexaoRecebidasComponent)
+      },
+      // F6C - PARCERIAS
+      {
+        path: 'parcerias',
+        loadComponent: () => import('./pages/operacional/parcerias/parceria-list/parceria-list').then(m => m.ParceriaListComponent)
+      },
+      {
+        path: 'parcerias/nova',
+        loadComponent: () => import('./pages/operacional/parcerias/parceria-nova/parceria-nova').then(m => m.ParceriaNovaComponent)
+      },
+      // F6D - VISITANTES
+      {
+        path: 'visitantes/externo',
+        loadComponent: () => import('./pages/operacional/visitantes/visitante-externo-form/visitante-externo-form').then(m => m.VisitanteExternoFormComponent)
+      },
+      {
+        path: 'visitantes/interno',
+        loadComponent: () => import('./pages/operacional/visitantes/visita-interna-form/visita-interna-form').then(m => m.VisitaInternaFormComponent)
+      },
+      {
+        path: 'visitantes/substituto',
+        loadComponent: () => import('./pages/operacional/visitantes/substituto-form/substituto-form').then(m => m.SubstitutoFormComponent)
+      },
+      {
+        path: 'visitantes/validacao',
+        loadComponent: () => import('./pages/operacional/visitantes/visitante-validacao/visitante-validacao').then(m => m.VisitanteValidacaoComponent)
+      },
+      // F6E - EDUCACIONAL
+      {
+        path: 'educacional/peen',
+        loadComponent: () => import('./pages/operacional/educacional/peen-modulos/peen-modulos').then(m => m.PeenModulosComponent)
+      },
+      {
+        path: 'educacional/teen',
+        loadComponent: () => import('./pages/operacional/educacional/teen-eventos/teen-eventos').then(m => m.TeenEventosComponent)
+      },
+      {
+        path: 'educacional/teen/inscricao/:id',
+        loadComponent: () => import('./pages/operacional/educacional/teen-inscricao/teen-inscricao').then(m => m.TeenInscricaoComponent)
+      },
+      // F6F - PAINÉIS
+      {
+        path: 'paineis/semanal',
+        loadComponent: () => import('./pages/operacional/paineis/painel-semanal/painel-semanal').then(m => m.PainelSemanalComponent)
+      },
+      {
+        path: 'paineis/evolucao',
+        loadComponent: () => import('./pages/operacional/paineis/painel-evolucao/painel-evolucao').then(m => m.PainelEvolucaoComponent)
+      },
+      {
+        path: 'paineis/equipe',
+        loadComponent: () => import('./pages/operacional/paineis/painel-equipe/painel-equipe').then(m => m.PainelEquipeComponent)
+      },
+      // F6G - RELATÓRIOS
+      {
+        path: 'relatorios/presenca',
+        loadComponent: () => import('./pages/operacional/relatorios/relatorio-presenca/relatorio-presenca').then(m => m.RelatorioPresencaComponent)
+      },
+      {
+        path: 'relatorios/conquistas',
+        loadComponent: () => import('./pages/operacional/relatorios/relatorio-conquistas/relatorio-conquistas').then(m => m.RelatorioConquistasComponent)
       },
       // DEFAULT
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

@@ -1,1 +1,144 @@
-<p>equipe-detail works!</p>
+<!-- src/app/pages/equipes/equipe-detail/equipe-detail.html -->
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (equipe) {
+
+  <app-page-header
+    [title]="equipe.nome"
+    subtitle="Detalhes da Equipe"
+    icon="fas fa-users-gear"
+    btnLabel="Editar"
+    [btnRoute]="'/equipes/editar/' + equipe.id">
+  </app-page-header>
+
+  <!-- Cards de resumo -->
+  <div class="row g-3 mb-3">
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <i class="fas fa-circle-dot fa-lg mb-1"></i>
+          <small class="text-muted d-block">Status</small>
+          <span class="badge {{ badgeStatus(equipe.status) }}">{{ labelStatus(equipe.status) }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <i class="fas fa-calendar-week fa-lg text-primary mb-1"></i>
+          <small class="text-muted d-block">Dia de Reunião</small>
+          <strong>{{ labelDia(equipe.diaReuniao) || '—' }}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <i class="fas fa-clock fa-lg text-info mb-1"></i>
+          <small class="text-muted d-block">Horário</small>
+          <strong>{{ equipe.horarioDescricao || '—' }}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm h-100">
+        <div class="card-body py-3">
+          <i class="fas fa-hashtag fa-lg text-success mb-1"></i>
+          <small class="text-muted d-block">Reuniões Realizadas</small>
+          <strong>{{ equipe.contadorReunioes }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botão de lançamento -->
+  @if (equipe.status === 'EM_FORMACAO') {
+    <div class="alert alert-warning d-flex justify-content-between align-items-center">
+      <span><i class="fas fa-rocket me-1"></i> Esta equipe ainda não foi lançada.</span>
+      <button class="btn btn-warning btn-sm" (click)="confirmLancamento = true">
+        <i class="fas fa-rocket me-1"></i> Lançar Equipe
+      </button>
+    </div>
+  }
+
+  <!-- Abas -->
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'dados'" (click)="abaAtiva = 'dados'">
+        <i class="fas fa-info-circle me-1"></i> Dados
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'diretores'" (click)="abaAtiva = 'diretores'">
+        <i class="fas fa-user-tie me-1"></i> Diretores
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'cargos'" (click)="abaAtiva = 'cargos'">
+        <i class="fas fa-award me-1"></i> Cargos Ativos
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'designacoes'" (click)="abaAtiva = 'designacoes'">
+        <i class="fas fa-id-badge me-1"></i> Designações
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="abaAtiva === 'ciclos'" (click)="abaAtiva = 'ciclos'">
+        <i class="fas fa-rotate me-1"></i> Ciclos Semanais
+      </button>
+    </li>
+  </ul>
+
+  @if (abaAtiva === 'dados') {
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <small class="text-muted">Data Início Formação</small>
+            <p class="mb-0">{{ equipe.dataInicioFormacao ? (equipe.dataInicioFormacao | date:'dd/MM/yyyy') : '—' }}</p>
+          </div>
+          <div class="col-12 col-md-4">
+            <small class="text-muted">Previsão de Lançamento</small>
+            <p class="mb-0">{{ equipe.dataPrevisaoLancamento ? (equipe.dataPrevisaoLancamento | date:'dd/MM/yyyy') : '—' }}</p>
+          </div>
+          <div class="col-12 col-md-4">
+            <small class="text-muted">Data Efetiva de Lançamento</small>
+            <p class="mb-0">{{ equipe.dataEfetivaLancamento ? (equipe.dataEfetivaLancamento | date:'dd/MM/yyyy') : '—' }}</p>
+          </div>
+          <div class="col-12 col-md-4">
+            <small class="text-muted">Modelo de Reunião</small>
+            <p class="mb-0">{{ equipe.modeloReuniao || '—' }}</p>
+          </div>
+          @if (equipe.linkZoom) {
+            <div class="col-12">
+              <small class="text-muted">Link Zoom</small>
+              <p class="mb-0"><a [href]="equipe.linkZoom" target="_blank" rel="noopener">{{ equipe.linkZoom }}</a></p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (abaAtiva === 'diretores') {
+    <app-equipe-diretores [equipeId]="id"></app-equipe-diretores>
+  }
+  @if (abaAtiva === 'cargos') {
+    <app-equipe-cargos [equipeId]="id"></app-equipe-cargos>
+  }
+  @if (abaAtiva === 'designacoes') {
+    <app-equipe-designacoes [equipeId]="id"></app-equipe-designacoes>
+  }
+  @if (abaAtiva === 'ciclos') {
+    <app-equipe-ciclos [equipeId]="id"></app-equipe-ciclos>
+  }
+
+  <app-confirm-dialog
+    [visible]="confirmLancamento"
+    title="Lançar Equipe"
+    [message]="'Deseja lançar a equipe ' + equipe.nome + '? Esta ação requer mínimo 15 membros ativos.'"
+    (confirmed)="lancar()"
+    (cancelled)="confirmLancamento = false">
+  </app-confirm-dialog>
+}

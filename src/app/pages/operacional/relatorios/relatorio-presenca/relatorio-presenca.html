@@ -1,0 +1,37 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Relatório de Presença" subtitle="Histórico de presença nas reuniões" icon="fas fa-clipboard-list" />
+
+  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap">
+    <input type="month" class="form-control form-control-sm w-auto" [(ngModel)]="filtroMes" (change)="carregar()" />
+    <button class="btn btn-sm btn-outline-secondary ms-auto d-print-none" (click)="imprimir()">
+      <i class="fas fa-print me-1"></i>Imprimir
+    </button>
+  </div>
+
+  @if (linhas.length === 0) {
+    <div class="alert alert-info d-print-none">Nenhum dado no período.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+          <tr><th>GR</th><th>Nome</th><th class="text-center">Presenças</th><th class="text-center">Total</th><th class="text-center">%</th></tr>
+        </thead>
+        <tbody>
+          @for (l of linhas; track l.nomeCompleto) {
+            <tr>
+              <td>{{ l.gr }}</td>
+              <td>{{ l.nomeCompleto }}</td>
+              <td class="text-center">{{ l.presencas }}</td>
+              <td class="text-center">{{ l.total }}</td>
+              <td class="text-center">
+                <span [class.text-success]="l.percentual >= 75" [class.text-danger]="l.percentual < 75">{{ l.percentual }}%</span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

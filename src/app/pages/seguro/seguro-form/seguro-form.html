@@ -1,1 +1,173 @@
-<p>seguro-form works!</p>
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (!loading) {
+  <app-page-header
+    title="Cadastro de Seguro de Vida"
+    subtitle="Fase 2 — Preencha todos os dados com atenção"
+    icon="fas fa-shield-alt"
+  />
+
+  <!-- Seção: Dados Pessoais -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-user me-2 text-primary"></i>Dados Pessoais</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Nacionalidade <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.nacionalidade" placeholder="Ex: Brasileira" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Número do RG <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.rgNumero" />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Órgão Emissor <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.rgOrgaoEmissor" placeholder="Ex: SSP" />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">UF RG <span class="text-danger">*</span></label>
+          <select class="form-select" [(ngModel)]="form.rgUf">
+            <option value="">UF</option>
+            @for (uf of ufs; track uf) { <option [value]="uf">{{ uf }}</option> }
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Estado Civil <span class="text-danger">*</span></label>
+          <select class="form-select" [(ngModel)]="form.estadoCivil">
+            <option value="">Selecione...</option>
+            @for (ec of estadosCivis; track ec) { <option [value]="ec">{{ ec }}</option> }
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Profissão Securitária <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.profissaoSecuritaria" placeholder="Profissão conforme apareça no contrato do seguro" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção: Beneficiários -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span><i class="fas fa-users me-2 text-success"></i>Beneficiários</span>
+      @if (beneficiarios.length < 2) {
+        <button class="btn btn-sm btn-outline-success" (click)="adicionarBeneficiario()">
+          <i class="fas fa-plus me-1"></i>Adicionar 2º Beneficiário
+        </button>
+      }
+    </div>
+    <div class="card-body">
+      @for (ben of beneficiarios; track $index) {
+        <div class="border rounded p-3 mb-3" [class.border-primary]="$index === 0">
+          <div class="d-flex justify-content-between mb-2">
+            <strong>{{ $index === 0 ? '1º Beneficiário' : '2º Beneficiário' }}</strong>
+            @if ($index > 0) {
+              <button class="btn btn-sm btn-outline-danger" (click)="removerBeneficiario($index)">
+                <i class="fas fa-trash"></i>
+              </button>
+            }
+          </div>
+          <div class="row g-3">
+            <div class="col-md-5">
+              <label class="form-label">Nome Completo <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" [(ngModel)]="ben.nomeCompleto" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">CPF <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" [(ngModel)]="ben.cpf" maxlength="14" placeholder="000.000.000-00" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Grau de Parentesco <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" [(ngModel)]="ben.grauParentesco" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Data de Nascimento <span class="text-danger">*</span></label>
+              <input type="date" class="form-control" [(ngModel)]="ben.dataNascimento" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Telefone</label>
+              <input type="text" class="form-control" [(ngModel)]="ben.telefone" maxlength="15" />
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Percentual <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" [(ngModel)]="ben.percentual"
+                [readonly]="beneficiarios.length === 1" min="1" max="100" />
+            </div>
+          </div>
+        </div>
+      }
+      @if (beneficiarios.length === 2) {
+        <div class="d-flex align-items-center gap-2">
+          <span class="text-muted">Soma dos percentuais:</span>
+          <span [class.text-success]="somaPercentual() === 100" [class.text-danger]="somaPercentual() !== 100" class="fw-bold">
+            {{ somaPercentual() }}%
+          </span>
+          @if (somaPercentual() !== 100) { <small class="text-danger">Deve totalizar 100%</small> }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Seção: Contato de Emergência -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-phone-alt me-2 text-warning"></i>Contato de Emergência</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label">Nome Completo <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="contatoEmergencia.nomeCompleto" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Grau de Relacionamento <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="contatoEmergencia.grauRelacionamento" />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Telefone Principal <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="contatoEmergencia.telefonePrincipal" maxlength="15" />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Telefone Secundário</label>
+          <input type="text" class="form-control" [(ngModel)]="contatoEmergencia.telefoneSecundario" maxlength="15" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção: LGPD -->
+  <div class="card border-warning shadow-sm mb-4">
+    <div class="card-header bg-warning text-dark"><i class="fas fa-lock me-2"></i>Consentimento LGPD</div>
+    <div class="card-body">
+      <p class="text-muted small mb-3">Para prosseguir com o cadastro do seguro de vida, você precisa aceitar os termos abaixo:</p>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="lgpd1" [(ngModel)]="lgpd1" />
+        <label class="form-check-label" for="lgpd1">
+          Autorizo o tratamento dos meus dados pessoais para fins de contratação e manutenção do seguro de vida coletivo.
+        </label>
+      </div>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="lgpd2" [(ngModel)]="lgpd2" />
+        <label class="form-check-label" for="lgpd2">
+          Declaro que as informações fornecidas são verdadeiras e estou ciente de que dados falsos podem implicar em cancelamento da apólice.
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="lgpd3" [(ngModel)]="lgpd3" />
+        <label class="form-check-label" for="lgpd3">
+          Li e aceito a Política de Privacidade da Conquiste+Conexões e autorizo o compartilhamento dos meus dados com a seguradora.
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 mb-4">
+    <button class="btn btn-primary btn-lg" (click)="salvar()" [disabled]="salvando || !lgpd1 || !lgpd2 || !lgpd3">
+      @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+      <i class="fas fa-save me-1"></i>Salvar Cadastro de Seguro
+    </button>
+    <a class="btn btn-outline-secondary btn-lg" [routerLink]="['/associados', associadoId]">
+      Cancelar
+    </a>
+  </div>
+}

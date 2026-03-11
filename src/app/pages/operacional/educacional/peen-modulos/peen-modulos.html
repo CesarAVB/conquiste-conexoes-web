@@ -1,0 +1,42 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="PEEN - Módulos" subtitle="Programa Educacional Empresarial Norte" icon="fas fa-graduation-cap" />
+
+  @if (modulos.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhum módulo disponível.</div>
+  } @else {
+    <div class="row g-3">
+      @for (m of modulos; track m.id) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100" [class.border-success]="m.concluido">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h6 class="card-title mb-0">{{ m.titulo }}</h6>
+                @if (m.concluido) {
+                  <span class="badge bg-success"><i class="fas fa-check"></i> Concluído</span>
+                } @else {
+                  <span class="badge bg-secondary">Pendente</span>
+                }
+              </div>
+              @if (m.descricao) { <p class="card-text small text-muted">{{ m.descricao }}</p> }
+              <div class="d-flex gap-2 mt-2">
+                @if (m.urlPlataforma) {
+                  <a [href]="m.urlPlataforma" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-external-link-alt me-1"></i>Acessar Plataforma
+                  </a>
+                }
+                @if (!m.concluido) {
+                  <button class="btn btn-sm btn-success" (click)="validar(m.id)" [disabled]="validando === m.id">
+                    @if (validando === m.id) { <span class="spinner-border spinner-border-sm me-1"></span> }
+                    <i class="fas fa-check me-1"></i>Marcar Concluído
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+}

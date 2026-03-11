@@ -1,0 +1,49 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Painel Semanal" subtitle="Indicadores da semana atual" icon="fas fa-tachometer-alt" />
+
+  <div class="d-flex gap-2 mb-3">
+    <a class="btn btn-sm btn-outline-secondary" routerLink="/paineis/evolucao"><i class="fas fa-chart-line me-1"></i>Evolução Individual</a>
+    <a class="btn btn-sm btn-outline-secondary" routerLink="/paineis/equipe"><i class="fas fa-users me-1"></i>Performance Equipe</a>
+  </div>
+
+  @if (indicadores.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhum dado disponível.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Indicador</th>
+            <th class="text-center">Meta</th>
+            <th class="text-center">Realizado</th>
+            <th class="text-center">Acumulado</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ind of indicadores; track ind.nome) {
+            <tr>
+              <td class="fw-semibold">{{ ind.nome }}</td>
+              <td class="text-center">{{ ind.meta }}</td>
+              <td class="text-center">
+                <span [class.text-success]="ind.realizado >= ind.meta" [class.text-danger]="ind.realizado < ind.meta" class="fw-bold">
+                  {{ ind.realizado }}
+                </span>
+              </td>
+              <td class="text-center">{{ ind.acumulado }}</td>
+              <td>
+                @if (ind.rotaAcao) {
+                  <a class="btn btn-sm btn-outline-primary" [routerLink]="ind.rotaAcao">
+                    <i class="fas fa-plus me-1"></i>{{ ind.labelAcao || 'Registrar' }}
+                  </a>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

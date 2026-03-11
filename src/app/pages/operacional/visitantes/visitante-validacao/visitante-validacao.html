@@ -1,0 +1,37 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Validação de Visitantes" subtitle="Visitantes e substitutos aguardando validação" icon="fas fa-clipboard-check">
+  </app-page-header>
+
+  <div class="d-flex gap-2 mb-3 flex-wrap">
+    <a class="btn btn-outline-primary btn-sm" routerLink="/visitantes/externo"><i class="fas fa-user-plus me-1"></i>Visitante Externo</a>
+    <a class="btn btn-outline-secondary btn-sm" routerLink="/visitantes/interno"><i class="fas fa-user-friends me-1"></i>Visita Interna</a>
+    <a class="btn btn-outline-warning btn-sm" routerLink="/visitantes/substituto"><i class="fas fa-user-check me-1"></i>Substituto</a>
+  </div>
+
+  @if (visitantes.length === 0) {
+    <div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>Nenhum visitante pendente de validação.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light"><tr><th>Nome</th><th>Tipo</th><th class="d-none d-md-table-cell">Data</th><th></th></tr></thead>
+        <tbody>
+          @for (v of visitantes; track v.id) {
+            <tr>
+              <td>{{ v.nomeCompleto }}</td>
+              <td><span class="badge" [class]="tipoClass[v.tipo]">{{ tipoLabel[v.tipo] }}</span></td>
+              <td class="d-none d-md-table-cell">{{ v.dataVisita | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                <button class="btn btn-sm btn-success" (click)="validar(v.id)" [disabled]="validando === v.id">
+                  @if (validando === v.id) { <span class="spinner-border spinner-border-sm me-1"></span> }
+                  <i class="fas fa-check"></i> Validar
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

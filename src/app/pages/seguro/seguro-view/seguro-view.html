@@ -1,1 +1,89 @@
-<p>seguro-view works!</p>
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (!loading && seguro) {
+  <app-page-header
+    title="Seguro de Vida"
+    subtitle="Visualização do cadastro"
+    icon="fas fa-shield-alt"
+  />
+
+  <div class="d-flex align-items-center gap-2 mb-3">
+    @if (seguro.editavel) {
+      <span class="badge bg-success fs-6"><i class="fas fa-edit me-1"></i>Editável</span>
+      <a class="btn btn-sm btn-outline-primary" [routerLink]="['/associados', associadoId, 'seguro']">Editar</a>
+    } @else {
+      <span class="badge bg-secondary fs-6"><i class="fas fa-lock me-1"></i>Bloqueado</span>
+      <button class="btn btn-sm btn-outline-warning" (click)="irParaSolicitacoes()">
+        <i class="fas fa-file-alt me-1"></i>Solicitar Alteração de Beneficiário
+      </button>
+    }
+    <a class="btn btn-sm btn-outline-secondary ms-auto" [routerLink]="['/associados', associadoId]">
+      <i class="fas fa-arrow-left me-1"></i>Voltar
+    </a>
+  </div>
+
+  <!-- Dados Pessoais -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-user me-2 text-primary"></i>Dados Pessoais</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><span class="text-muted d-block small">Nacionalidade</span>{{ seguro.nacionalidade }}</div>
+        <div class="col-md-3"><span class="text-muted d-block small">RG</span>{{ seguro.rgNumero }} / {{ seguro.rgOrgaoEmissor }}-{{ seguro.rgUf }}</div>
+        <div class="col-md-3"><span class="text-muted d-block small">Estado Civil</span>{{ seguro.estadoCivil }}</div>
+        <div class="col-md-3"><span class="text-muted d-block small">Profissão Securitária</span>{{ seguro.profissaoSecuritaria }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Beneficiários -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><i class="fas fa-users me-2 text-success"></i>Beneficiários</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead class="table-light"><tr><th>Nome</th><th>CPF</th><th>Parentesco</th><th>Nasc.</th><th>%</th><th>Telefone</th></tr></thead>
+          <tbody>
+            @for (b of seguro.beneficiarios; track b.id) {
+              <tr>
+                <td>{{ b.nomeCompleto }}</td>
+                <td>{{ b.cpf }}</td>
+                <td>{{ b.grauParentesco }}</td>
+                <td>{{ b.dataNascimento | date:'dd/MM/yyyy' }}</td>
+                <td><span class="badge bg-info text-dark">{{ b.percentual }}%</span></td>
+                <td>{{ b.telefone || '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contato de Emergência -->
+  @if (seguro.contatoEmergencia) {
+    <div class="card shadow-sm mb-4">
+      <div class="card-header"><i class="fas fa-phone-alt me-2 text-warning"></i>Contato de Emergência</div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-4"><span class="text-muted d-block small">Nome</span>{{ seguro.contatoEmergencia.nomeCompleto }}</div>
+          <div class="col-md-2"><span class="text-muted d-block small">Relacionamento</span>{{ seguro.contatoEmergencia.grauRelacionamento }}</div>
+          <div class="col-md-3"><span class="text-muted d-block small">Tel. Principal</span>{{ seguro.contatoEmergencia.telefonePrincipal }}</div>
+          <div class="col-md-3"><span class="text-muted d-block small">Tel. Secundário</span>{{ seguro.contatoEmergencia.telefoneSecundario || '—' }}</div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="text-muted small">
+    <i class="fas fa-calendar me-1"></i>Aceite LGPD: {{ seguro.lgpdDataAceite | date:'dd/MM/yyyy HH:mm' }}
+  </div>
+}
+
+@if (!loading && !seguro) {
+  <div class="alert alert-info">
+    <i class="fas fa-info-circle me-2"></i>Nenhum cadastro de seguro encontrado.
+    <a [routerLink]="['/associados', associadoId, 'seguro']" class="alert-link ms-2">Realizar cadastro</a>
+  </div>
+}

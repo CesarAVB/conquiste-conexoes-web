@@ -1,0 +1,36 @@
+﻿<app-page-header title="Visita Interna" subtitle="Membro de outra equipe visitando" icon="fas fa-user-friends" />
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Equipe de Origem <span class="text-danger">*</span></label>
+        <select class="form-select" [(ngModel)]="form.equipeDestinoId">
+          <option [ngValue]="0">Selecione...</option>
+          @for (e of equipes; track e.id) {
+            <option [ngValue]="e.id">{{ e.nome }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Nome Completo <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" [(ngModel)]="form.nomeCompleto" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">CPF</label>
+        <input type="text" class="form-control" [(ngModel)]="form.cpf" maxlength="14" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Telefone</label>
+        <input type="text" class="form-control" [(ngModel)]="form.telefone" maxlength="15" />
+      </div>
+    </div>
+    <div class="mt-3 d-flex gap-2">
+      <button class="btn btn-primary" (click)="salvar()" [disabled]="salvando">
+        @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+        <i class="fas fa-save me-1"></i>Registrar Visita
+      </button>
+      <a class="btn btn-outline-secondary" routerLink="/visitantes/validacao">Cancelar</a>
+    </div>
+  </div>
+</div>

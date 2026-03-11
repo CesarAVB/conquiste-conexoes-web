@@ -1,0 +1,31 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="TEEN - Eventos" subtitle="Treinamento Empresarial Executivo Norte" icon="fas fa-calendar-star" />
+
+  @if (eventos.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhum evento disponível no momento.</div>
+  } @else {
+    <div class="row g-3">
+      @for (e of eventos; track e.id) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100" [class.border-success]="e.inscrito">
+            <div class="card-body">
+              <h6 class="card-title">{{ e.titulo }}</h6>
+              @if (e.descricao) { <p class="card-text small text-muted">{{ e.descricao }}</p> }
+              <p class="small mb-1"><i class="fas fa-calendar me-1"></i>{{ e.dataEvento | date:'dd/MM/yyyy HH:mm' }}</p>
+              @if (e.local) { <p class="small mb-1"><i class="fas fa-map-marker-alt me-1"></i>{{ e.local }}</p> }
+              @if (e.inscrito) {
+                <span class="badge bg-success"><i class="fas fa-check me-1"></i>Inscrito</span>
+              } @else {
+                <a class="btn btn-sm btn-primary" [routerLink]="['/educacional/teen/inscricao', e.id]">
+                  <i class="fas fa-user-plus me-1"></i>Inscrever-se
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+}

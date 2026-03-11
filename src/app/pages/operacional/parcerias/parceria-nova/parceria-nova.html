@@ -1,0 +1,33 @@
+﻿<app-page-header title="Nova Parceria" subtitle="Registre uma parceria de negócios (+5 pontos para cada)" icon="fas fa-handshake"
+  btnLabel="Ver Parcerias" btnRoute="/parcerias" btnIcon="fas fa-list" />
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Ao registrar, ambos os associados recebem 5 pontos. Não é possível registrar duplicidade no mesmo dia.</div>
+
+    <div class="mb-3 position-relative">
+      <label class="form-label">Selecione o Parceiro <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="buscaTexto" placeholder="Buscar associado por nome ou CPF..." />
+        <button class="btn btn-outline-secondary" type="button" (click)="buscar()" [disabled]="buscando">
+          <i class="fas" [class.fa-search]="!buscando" [class.fa-spinner]="buscando" [class.fa-spin]="buscando"></i>
+        </button>
+      </div>
+      @if (resultados.length > 0) {
+        <div class="list-group position-absolute w-100 shadow" style="z-index:1000">
+          @for (a of resultados; track a.id) {
+            <button type="button" class="list-group-item list-group-item-action" (click)="selecionar(a)">{{ a.nomeCompleto }} &mdash; {{ a.cpf }}</button>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-success" (click)="registrar()" [disabled]="!associado2Id || salvando">
+        @if (salvando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+        <i class="fas fa-handshake me-1"></i>Registrar Parceria
+      </button>
+      <a class="btn btn-outline-secondary" routerLink="/parcerias">Cancelar</a>
+    </div>
+  </div>
+</div>

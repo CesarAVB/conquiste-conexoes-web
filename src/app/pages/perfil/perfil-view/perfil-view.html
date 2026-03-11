@@ -1,1 +1,130 @@
-<p>perfil-view works!</p>
+@if (loading) {
+  <app-loading-spinner></app-loading-spinner>
+}
+
+@if (!loading && perfil) {
+  <div class="container-fluid px-0">
+    <!-- Cabeçalho do Cartão -->
+    <div class="card shadow mb-4">
+      <div class="card-body py-4">
+        <div class="row align-items-center g-4">
+          <!-- Foto e Logo -->
+          <div class="col-auto">
+            @if (perfil.fotoUrl) {
+              <img [src]="perfil.fotoUrl" alt="Foto" class="rounded-circle border border-3 border-primary" style="width:100px;height:100px;object-fit:cover" />
+            } @else {
+              <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width:100px;height:100px">
+                <i class="fas fa-user text-white fa-3x"></i>
+              </div>
+            }
+          </div>
+          <div class="col">
+            <h3 class="mb-0">{{ perfil.nomeProfissional }}</h3>
+            @if (perfil.nomeEmpresa) { <p class="text-muted mb-1">{{ perfil.nomeEmpresa }}</p> }
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge bg-primary"><i class="fas fa-layer-group me-1"></i>{{ perfil.clusterNome }}</span>
+              <span class="badge bg-secondary">{{ perfil.atuacaoEspecificaNome }}</span>
+              @if (perfil.equipeNome) { <span class="badge bg-info text-dark"><i class="fas fa-users me-1"></i>{{ perfil.equipeNome }}</span> }
+              <span class="badge" [class]="statusClasses[perfil.status]">{{ perfil.status }}</span>
+            </div>
+          </div>
+          @if (perfil.logomarcaUrl) {
+            <div class="col-auto d-none d-md-block">
+              <img [src]="perfil.logomarcaUrl" alt="Logomarca" class="border rounded" style="max-width:100px;max-height:80px;object-fit:contain" />
+            </div>
+          }
+          <div class="col-auto">
+            <a [routerLink]="['/associados', associadoId, 'perfil']" class="btn btn-outline-primary btn-sm">
+              <i class="fas fa-edit me-1"></i>Editar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Coluna Esquerda -->
+      <div class="col-lg-4">
+        <!-- Contato -->
+        <div class="card shadow-sm mb-3">
+          <div class="card-header"><i class="fas fa-phone me-2"></i>Contato</div>
+          <div class="card-body">
+            @if (perfil.telefonePrincipal) {
+              <div class="d-flex align-items-center gap-2 mb-1"><i class="fas fa-phone text-muted"></i>{{ perfil.telefonePrincipal }}</div>
+            }
+            @if (perfil.telefoneSecundario) {
+              <div class="d-flex align-items-center gap-2 mb-1"><i class="fas fa-phone text-muted"></i>{{ perfil.telefoneSecundario }}</div>
+            }
+            @if (perfil.emailPrincipal) {
+              <div class="d-flex align-items-center gap-2 mb-1"><i class="fas fa-envelope text-muted"></i>{{ perfil.emailPrincipal }}</div>
+            }
+            @if (perfil.site) {
+              <div class="d-flex align-items-center gap-2"><i class="fas fa-globe text-muted"></i><a [href]="perfil.site" target="_blank" rel="noopener">Site</a></div>
+            }
+          </div>
+        </div>
+        <!-- Redes Sociais -->
+        @if (perfil.linkedin || perfil.instagram || perfil.youtube || perfil.outraRedeSocial) {
+          <div class="card shadow-sm mb-3">
+            <div class="card-header"><i class="fas fa-share-alt me-2"></i>Redes Sociais</div>
+            <div class="card-body d-flex flex-wrap gap-2">
+              @if (perfil.linkedin) { <a [href]="perfil.linkedin" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary"><i class="fab fa-linkedin me-1"></i>LinkedIn</a> }
+              @if (perfil.instagram) { <a [href]="perfil.instagram" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger"><i class="fab fa-instagram me-1"></i>Instagram</a> }
+              @if (perfil.youtube) { <a [href]="perfil.youtube" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger"><i class="fab fa-youtube me-1"></i>YouTube</a> }
+              @if (perfil.outraRedeSocial) { <a [href]="perfil.outraRedeSocial" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary"><i class="fas fa-link me-1"></i>Outra</a> }
+            </div>
+          </div>
+        }
+        <!-- C+C -->
+        <div class="card shadow-sm">
+          <div class="card-header"><i class="fas fa-calendar me-2"></i>Dados C+C</div>
+          <div class="card-body">
+            <div class="mb-1"><small class="text-muted">Ingresso</small><div>{{ perfil.dataIngresso | date:'dd/MM/yyyy' }}</div></div>
+            <div><small class="text-muted">Vencimento</small><div>{{ perfil.vencimento | date:'dd/MM/yyyy' }}</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coluna Direita -->
+      <div class="col-lg-8">
+        @if (perfil.oQueEuFaco) {
+          <div class="card shadow-sm mb-3">
+            <div class="card-header"><i class="fas fa-star me-2 text-warning"></i>O que eu faço</div>
+            <div class="card-body">{{ perfil.oQueEuFaco }}</div>
+          </div>
+        }
+        @if (perfil.publicoIdeal) {
+          <div class="card shadow-sm mb-3">
+            <div class="card-header"><i class="fas fa-bullseye me-2 text-primary"></i>Público Ideal</div>
+            <div class="card-body">{{ perfil.publicoIdeal }}</div>
+          </div>
+        }
+        @if (perfil.principalProblemaQueResolvo) {
+          <div class="card shadow-sm mb-3">
+            <div class="card-header"><i class="fas fa-wrench me-2 text-success"></i>Principal Problema que Resolvo</div>
+            <div class="card-body">{{ perfil.principalProblemaQueResolvo }}</div>
+          </div>
+        }
+        @if (perfil.conexoesEstrategicas) {
+          <div class="card shadow-sm mb-3">
+            <div class="card-header"><i class="fas fa-handshake me-2 text-info"></i>Conexões Estratégicas que Busco</div>
+            <div class="card-body">{{ perfil.conexoesEstrategicas }}</div>
+          </div>
+        }
+        @if (perfil.interessesPessoais) {
+          <div class="card shadow-sm">
+            <div class="card-header"><i class="fas fa-heart me-2 text-danger"></i>Interesses Pessoais</div>
+            <div class="card-body">{{ perfil.interessesPessoais }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+@if (!loading && !perfil) {
+  <div class="alert alert-info">
+    <i class="fas fa-info-circle me-2"></i>Perfil não preenchido.
+    <a [routerLink]="['/associados', associadoId, 'perfil']" class="alert-link ms-2">Preencher perfil</a>
+  </div>
+}

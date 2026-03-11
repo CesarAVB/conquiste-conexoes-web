@@ -1,0 +1,52 @@
+﻿@if (loading) { <app-loading-spinner></app-loading-spinner> }
+
+@if (!loading) {
+  <app-page-header title="Conexões Geradas" subtitle="Indicações que você criou" icon="fas fa-share-alt"
+    btnLabel="Nova Conexão" btnRoute="/conexoes/nova" btnIcon="fas fa-plus" />
+
+  <div class="d-flex gap-2 mb-3 align-items-center">
+    <select class="form-select form-select-sm w-auto" [(ngModel)]="filtroStatus" (change)="carregar()">
+      <option value="">Todos</option>
+      <option value="NOVA">Nova</option>
+      <option value="EM_ANDAMENTO">Em Andamento</option>
+      <option value="FECHADA">Fechada</option>
+      <option value="NAO_FECHADA">Não Fechada</option>
+    </select>
+    <a class="btn btn-sm btn-outline-secondary ms-auto" routerLink="/conexoes/recebidas">
+      <i class="fas fa-inbox me-1"></i>Ver Recebidas
+    </a>
+  </div>
+
+  @if (conexoes.length === 0) {
+    <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhuma conexão gerada.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light"><tr><th>Receptor</th><th>Contato</th><th class="d-none d-md-table-cell">Tipo</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          @for (c of conexoes; track c.id) {
+            <tr [class.table-warning]="c.prazoEstourado">
+              <td>{{ c.receptorNome }}</td>
+              <td>
+                <div>{{ c.nomeContato }}</div>
+                @if (c.empresaContato) { <small class="text-muted">{{ c.empresaContato }}</small> }
+              </td>
+              <td class="d-none d-md-table-cell"><span class="badge" [class]="tipoClass[c.tipo]">{{ c.tipo }}</span></td>
+              <td>
+                <span class="badge" [class]="statusClass[c.status]">{{ statusLabel[c.status] }}</span>
+                @if (c.prazoEstourado) { <span class="badge bg-warning text-dark ms-1"><i class="fas fa-clock"></i> Prazo</span> }
+              </td>
+              <td>
+                @if (c.status === 'NOVA') {
+                  <button class="btn btn-sm btn-outline-danger" (click)="confirmarExcluir(c.id)"><i class="fas fa-trash"></i></button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}
+
+<app-confirm-dialog [visible]="confirmVisible" title="Excluir Conexão" [message]="'Deseja excluir esta conexão?'" (confirmed)="excluir()" (cancelled)="cancelar()" />

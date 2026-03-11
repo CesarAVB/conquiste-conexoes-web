@@ -1,1 +1,121 @@
-<p>equipe-form works!</p>
+<!-- src/app/pages/equipes/equipe-form/equipe-form.html -->
+<app-page-header
+  [title]="isEdit ? 'Editar Equipe' : 'Nova Equipe'"
+  icon="fas fa-users-gear">
+</app-page-header>
+
+<form (ngSubmit)="salvar()">
+  <!-- Dados Gerais -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-header"><i class="fas fa-info-circle me-2"></i>Dados da Equipe</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Nome da Equipe <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="form.nome" name="nome"
+                 placeholder="C+C Nome da Equipe" maxlength="100" required>
+          <small class="text-muted">Deve começar com &quot;C+C&quot;</small>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Data Início Formação</label>
+          <input type="date" class="form-control" [(ngModel)]="form.dataInicioFormacao" name="dataInicioFormacao"
+                 (change)="onDataInicioChange()">
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Previsão de Lançamento</label>
+          <input type="text" class="form-control" [value]="previsaoLancamento || '—'" readonly
+                 title="Calculado automaticamente (12 semanas após o início)">
+          <small class="text-muted">Calculado automaticamente</small>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Dia de Reunião</label>
+          <select class="form-select" [(ngModel)]="form.diaReuniao" name="diaReuniao">
+            <option value="">Selecione...</option>
+            @for (d of diasReuniao; track d) {
+              <option [value]="d">{{ diasLabel[d] }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Horário de Reunião</label>
+          <select class="form-select" [(ngModel)]="form.horarioReuniaoId" name="horarioReuniaoId">
+            <option value="">Selecione...</option>
+            @for (h of horarios; track h.id) {
+              <option [value]="h.id">{{ h.descricao }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Modelo de Reunião</label>
+          <select class="form-select" [(ngModel)]="form.modeloReuniao" name="modeloReuniao">
+            <option value="">Selecione...</option>
+            @for (m of modelosReuniao; track m) {
+              <option [value]="m">{{ m }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Link Zoom</label>
+          <input type="url" class="form-control" [(ngModel)]="form.linkZoom" name="linkZoom"
+                 placeholder="https://zoom.us/j/...">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Endereço Presencial -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-header"><i class="fas fa-map-marker-alt me-2"></i>Endereço da Reunião Presencial</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Rua / Logradouro</label>
+          <input type="text" class="form-control" [(ngModel)]="form.enderecoRua" name="enderecoRua">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="form-label">Número</label>
+          <input type="text" class="form-control" [(ngModel)]="form.enderecoNumero" name="enderecoNumero">
+        </div>
+        <div class="col-6 col-md-4">
+          <label class="form-label">Complemento</label>
+          <input type="text" class="form-control" [(ngModel)]="form.enderecoComplemento" name="enderecoComplemento">
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Bairro</label>
+          <input type="text" class="form-control" [(ngModel)]="form.enderecoBairro" name="enderecoBairro">
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Cidade</label>
+          <input type="text" class="form-control" [(ngModel)]="form.enderecoCidade" name="enderecoCidade">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="form-label">Estado</label>
+          <select class="form-select" [(ngModel)]="form.enderecoEstado" name="enderecoEstado">
+            <option value="">UF</option>
+            @for (uf of estados; track uf) {
+              <option [value]="uf">{{ uf }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="form-label">CEP</label>
+          <input type="text" class="form-control" [ngModel]="form.enderecoCep" name="enderecoCep"
+                 (ngModelChange)="aplicarMascaraCep($event)" placeholder="00000-000" maxlength="9">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-cc-primary" [disabled]="loading">
+      @if (loading) {
+        <span class="spinner-border spinner-border-sm me-1"></span> Salvando...
+      } @else {
+        <i class="fas fa-save me-1"></i> Salvar
+      }
+    </button>
+    <a routerLink="/equipes" class="btn btn-outline-secondary">
+      <i class="fas fa-arrow-left me-1"></i> Voltar
+    </a>
+  </div>
+</form>
