@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
 .footer-cc {
   padding: 0.75rem 1.5rem;
   text-align: center;
@@ -5,7 +10,7 @@
   color: var(--cc-text-muted);
   border-top: 1px solid var(--cc-border);
   background: #fff;
-  margin-top: auto;
+  flex-shrink: 0;
 
   a {
     color: var(--cc-primary);
